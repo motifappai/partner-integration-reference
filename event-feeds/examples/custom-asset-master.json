@@ -1,0 +1,19 @@
+{
+  "specversion": "1.0",
+  "source": "urn:partner:security-master",
+  "time": "2026-10-07T09:00:00Z",
+  "datacontenttype": "application/json",
+  "id": "private-fund-master-1",
+  "type": "ai.motif.asset.master.v1",
+  "subject": "private-fund-a",
+  "data": {
+    "externalId": "private-fund-a",
+    "asOf": "2026-10-07T09:00:00Z",
+    "revision": 1,
+    "action": "CREATE_CUSTOM",
+    "name": "Private Fund A",
+    "symbol": "PRIVATE-A",
+    "currency": "USD",
+    "priceProvider": "CUSTOM"
+  }
+}

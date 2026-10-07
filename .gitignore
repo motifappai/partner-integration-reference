@@ -4,3 +4,7 @@ node_modules/
 .DS_Store
 
 java/**/target/
+
+.local/
+connector/secrets/
+connector/config.json

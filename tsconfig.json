@@ -10,5 +10,11 @@
     "skipLibCheck": true,
     "types": ["node"]
   },
-  "include": ["sdk/**/*.ts", "rest/**/*.ts", "shared/**/*.ts", "tests/**/*.ts"]
+  "include": [
+    "sdk/**/*.ts",
+    "rest/**/*.ts",
+    "shared/**/*.ts",
+    "tests/**/*.ts",
+    "event-feeds/**/*.ts"
+  ]
 }

@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "healthPort": 8080,
+  "connections": [
+    {
+      "id": "chelmer-sandbox",
+      "organizationId": "SANDBOX_ORGANIZATION_ID",
+      "environment": "sandbox",
+      "source": {
+        "urlFile": "/run/secrets/partner.url",
+        "caFile": "/run/secrets/partner-ca.pem",
+        "queue": "partner.ingress",
+        "quarantineQueue": "partner.quarantine",
+        "outputExchange": "partner.output",
+        "outputRoutingKey": "events"
+      },
+      "destination": {
+        "urlFile": "/run/secrets/motif.url",
+        "caFile": "/run/secrets/motif-ca.pem",
+        "inputExchange": "motif.input",
+        "inputRoutingKey": "events",
+        "outputQueue": "motif.output",
+        "quarantineQueue": "motif.connector-quarantine"
+      },
+      "prefetch": 8,
+      "maxMessageBytes": 262144,
+      "confirmTimeoutMs": 15000
+    }
+  ]
+}

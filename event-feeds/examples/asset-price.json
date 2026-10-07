@@ -1,0 +1,18 @@
+{
+  "specversion": "1.0",
+  "source": "urn:partner:security-master",
+  "time": "2026-10-07T09:00:00Z",
+  "datacontenttype": "application/json",
+  "id": "private-fund-price-1",
+  "type": "ai.motif.asset.price.v1",
+  "subject": "private-fund-a",
+  "data": {
+    "externalId": "private-fund-a",
+    "asOf": "2026-10-07T09:00:00Z",
+    "revision": 1,
+    "unitPrice": "12.50",
+    "currency": "USD",
+    "priceType": "CLOSE",
+    "adjustment": "UNADJUSTED"
+  }
+}

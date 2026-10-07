@@ -1,11 +1,12 @@
 # Maintaining the reference implementations
 
-The repository is independently versioned. The TypeScript reference depends on the public npm SDK; `rest/` uses Node.js alone. The Java reference depends on the Java SDK built in the same Maven reactor. Do not add monorepo imports, workspace dependency ranges, private API calls, generated SDK output, credentials or copied build output.
+The repository is independently versioned. The TypeScript reference depends on the public npm SDK; `event-feeds/rest.ts` uses direct HTTP; the reference publisher uses the connector broker library. The Java reference depends on the Java SDK built in the same Maven reactor. Do not add monorepo imports, workspace dependency ranges, private API calls, generated SDK output, credentials or copied build output.
 
 Run these from the repository root once the required SDK version is published:
 
 ```bash
 npm ci
+npm ci --prefix connector
 npm install --prefix sdk
 npm run typecheck
 npm test
@@ -52,4 +53,23 @@ Set `REFERENCE_COMMIT` to the verified commit SHA. Keep that commit available on
 
 ## Java SDK and Jakarta reference
 
-See [Java instructions](java/README.md). Build with JDK 25 and `mvn -s java/.mvn/settings.xml -f java/pom.xml install`, then run `npm run test:java` to compare all three implementations against the same HTTP contract fixtures. Commit the filtered OpenAPI source, generator configuration and handwritten helpers; never commit `target/`. The SDK JAR is built locally and is not a Maven Central release.
+See [Java instructions](java/README.md). Build with JDK 25 and `mvn -s java/.mvn/settings.xml -f java/pom.xml install`, then run `npm run test:java` with the two test brokers running to compare all three implementations against the same HTTP and broker contract fixture. Commit the filtered OpenAPI source, generator configuration and handwritten helpers; never commit `target/`. The SDK JAR is built locally and is not a Maven Central release.
+
+## Connector and blueprint checks
+
+```bash
+npm ci --prefix connector
+npm --prefix connector run typecheck
+npm --prefix connector test
+docker compose -f connector/tests/compose.yml up -d --wait
+npm --prefix connector run test:integration
+npm run test:blueprint
+npm run test:java
+docker build -t motif-partner-connector:0.1.0 connector
+```
+
+The blueprint tests run the real connector across two real RabbitMQ brokers. Their HTTP server and receiving Motif processor are contract fixtures, so these tests verify cross-language request/event parity, not product valuation or research. The Motif repository separately tests the real feed worker against RabbitMQ and PostgreSQL, including dependency retry and durable outcomes.
+
+`event-feeds/partner-events.schema.json` is generated from Motif's authoritative Zod event schema using `pnpm --filter @motif-ai/api export-partner-events`, then copied here. Do not hand-edit it. Resync the Java OpenAPI document whenever API controls change. Confirm source examples validate against the exported contract.
+
+Publishing a `connector-vX.Y.Z` Git tag triggers the container workflow. Keep the tag, package version, documentation and image digest aligned. Release activation also requires deployed migrations/API/feeds worker, tenant provisioning, matching public SDK and a live sandbox acceptance run.

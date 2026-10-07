@@ -1,0 +1,19 @@
+services:
+  connector:
+    build: .
+    image: motif-partner-connector:0.1.0
+    restart: unless-stopped
+    init: true
+    read_only: true
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    environment:
+      MOTIF_CONNECTOR_CONFIG: /etc/motif/connector.json
+    volumes:
+      - ./config.json:/etc/motif/connector.json:ro
+      - ./secrets:/run/secrets:ro
+    ports:
+      - '127.0.0.1:8080:8080'
+    stop_grace_period: 30s
