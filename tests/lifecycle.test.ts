@@ -21,7 +21,11 @@ async function close(server: Server) {
   )
 }
 
-async function exercise(implementation: 'sdk' | 'rest', mapping: 'local' | 'motif') {
+async function exercise(
+  implementation: 'sdk' | 'rest',
+  mapping: 'local' | 'motif',
+  ignoreExternalId = false
+) {
   const allocation = createServer()
   const receiverPort = await listen(allocation)
   await close(allocation)
@@ -133,7 +137,7 @@ async function exercise(implementation: 'sdk' | 'rest', mapping: 'local' | 'moti
         if (url.searchParams.has('externalId'))
           content = {
             assets:
-              url.searchParams.get('externalId') === storedReference
+              ignoreExternalId || url.searchParams.get('externalId') === storedReference
                 ? [{ id: 'apple-id', externalId: storedReference }]
                 : [],
             nextCursor: null,
@@ -275,6 +279,14 @@ async function exercise(implementation: 'sdk' | 'rest', mapping: 'local' | 'moti
     })
     clearTimeout(timeout)
     assert.deepEqual(failures, [], output)
+    if (ignoreExternalId) {
+      assert.notEqual(exitCode, 0, output)
+      assert.match(output, /Exact custom reference lookup failed/)
+      assert.ok(!operations.includes('POST /v1/sdk/assets'))
+      assert.ok(!operations.includes('PATCH /v1/sdk/assets/custom-id'))
+      assert.equal(snapshots.length, 0)
+      return operations
+    }
     assert.equal(exitCode, 0, output)
     assert.equal(snapshots.length, 3)
     assert.deepEqual(record(snapshots[0]).holdings, [
@@ -332,5 +344,11 @@ for (const mapping of ['local', 'motif'] as const) {
       restOperations.indexOf('POST /v1/sdk/assets') <
         restOperations.indexOf('PUT /v1/sdk/portfolios/account')
     )
+  })
+}
+
+for (const implementation of ['sdk', 'rest'] as const) {
+  test(`${implementation} refuses an API that ignores exact reference lookup`, async () => {
+    await exercise(implementation, 'local', true)
   })
 }

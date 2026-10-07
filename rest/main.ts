@@ -139,7 +139,8 @@ async function main() {
         )
       )
       const stored = record(array(mapped.assets)[0])
-      if (stored.id !== assetId) throw new Error('Asset mapping was not persisted')
+      if (stored.id !== assetId || stored.externalId !== externalAssetId)
+        throw new Error('Asset mapping was not persisted')
       show('Organization asset reference stored in Motif', stored)
     } else {
       show('Save this mapping in your own instrument database', {
@@ -157,8 +158,16 @@ async function main() {
           `/v1/sdk/assets?${new URLSearchParams({ externalId: customExternalId, limit: '1' })}`
         )
       )
+      const existingAsset = array(existing.assets)[0]
+      if (existingAsset) {
+        const identity = record(existingAsset)
+        if (identity.externalId !== customExternalId || identity.category !== 'CUSTOM')
+          throw new Error(
+            'Exact custom reference lookup failed; verify the API release and instrument mapping'
+          )
+      }
       const customAsset = record(
-        array(existing.assets)[0] ??
+        existingAsset ??
           (await request('POST', '/v1/sdk/assets', {
             externalId: customExternalId,
             name: 'Private Fund A',

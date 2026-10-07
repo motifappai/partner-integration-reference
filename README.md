@@ -63,7 +63,7 @@ npm run rest -- --apply --mapping=local
 npm run rest -- --apply --mapping=motif
 ```
 
-`local` is the default: the example prints your reference and Motif asset ID for storage in your own database. `motif` PATCHes an organization-specific `externalId`, then confirms it with an exact lookup. It supplies USD on first configuration and preserves the price provider. It refuses to overwrite an existing reference; use local mode on subsequent runs or deliberately reconcile that mapping first. A stored reference remains after exit. Your production reference should be stable, such as a security-master listing ID; this sandbox example uses a unique run prefix. References are unique per organization, not global, and a bare ISIN may need a listing suffix if you hold several listings.
+`local` is the default: the example prints your reference and Motif asset ID for storage in your own database. `motif` PATCHes an organization-specific `externalId`, then confirms it with an exact lookup. It supplies USD on first configuration and preserves the price provider. It verifies the exact reference returned by the API and refuses to overwrite an existing reference; use local mode on subsequent runs or deliberately reconcile that mapping first. A stored reference remains after exit. Your production reference should be stable, such as a security-master listing ID; this sandbox example uses a unique run prefix. References are unique per organization, not global, and a bare ISIN may need a listing suffix if you hold several listings.
 
 All snapshots use `{type: 'ASSET', assetId}` for the chosen instruments. Market and asset insight reads do not need a portfolio. Asset notifications currently require that your organization holds that asset in an active portfolio.
 
@@ -78,7 +78,7 @@ npm run rest -- --apply --assets
 npm run rest -- --apply --document=/absolute/path/factsheet.pdf
 ```
 
-`--assets` checks an exact external reference, creates Private Fund A if absent, selects CUSTOM pricing, sends USD 12.50, retries that exact price, corrects it to USD 13 with revision 2 at the same timestamp, and reads the price history. This happens during discovery, before portfolio creation. Both snapshots include five units of the fund alongside Apple, exactly as in the guide's optional holdings flow. At the corrected USD 13 price, those five units are worth USD 65. It does not demonstrate revaluing multiple portfolios or complete historical performance coverage.
+`--assets` checks an exact external reference (and rejects a response for a different reference or category), creates Private Fund A if absent, selects CUSTOM pricing, sends USD 12.50, retries that exact price, corrects it to USD 13 with revision 2 at the same timestamp, and reads the price history. This happens during discovery, before portfolio creation. Both snapshots include five units of the fund alongside Apple, exactly as in the guide's optional holdings flow. At the corrected USD 13 price, those five units are worth USD 65. It does not demonstrate revaluing multiple portfolios or complete historical performance coverage.
 
 `--document` also enables the asset steps. Supply a sandbox PDF of at most 20 MiB. The example creates an upload session, prints the document ID, sends raw bytes with the returned storage headers (without the Motif API key), finalizes and polls for completion. A timeout or failed document exits with an error. Use the printed receipt to inspect an unfinished document; restarting the walkthrough creates a new run and document.
 

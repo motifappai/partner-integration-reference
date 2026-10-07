@@ -122,7 +122,10 @@ async function main() {
         currency: 'USD',
       })
       const mapped = await motif.assets.list({ externalId: externalAssetId, limit: 1 })
-      if (mapped.assets[0]?.id !== assetId)
+      if (
+        mapped.assets[0]?.id !== assetId ||
+        mapped.assets[0]?.externalId !== externalAssetId
+      )
         throw new Error('Asset mapping was not persisted')
       show('Organization asset reference stored in Motif', mapped.assets[0])
     } else {
@@ -138,8 +141,16 @@ async function main() {
       const existing = record(
         await motif.assets.list({ externalId: customExternalId, limit: 1 })
       )
+      const existingAsset = array(existing.assets)[0]
+      if (existingAsset) {
+        const identity = record(existingAsset)
+        if (identity.externalId !== customExternalId || identity.category !== 'CUSTOM')
+          throw new Error(
+            'Exact custom reference lookup failed; verify the API release and instrument mapping'
+          )
+      }
       const customAsset = record(
-        array(existing.assets)[0] ??
+        existingAsset ??
           (await motif.assets.create({
             externalId: customExternalId,
             name: 'Private Fund A',
