@@ -218,7 +218,7 @@
             },
             "unitPrice": {
               "type": "string",
-              "pattern": "^\\d{1,12}(\\.\\d{1,8})?$"
+              "pattern": "^(?!0+(?:\\.0+)?$)\\d{1,12}(\\.\\d{1,8})?$"
             },
             "currency": {
               "type": "string",
@@ -319,7 +319,7 @@
             },
             "rate": {
               "type": "string",
-              "pattern": "^\\d{1,16}(\\.\\d{1,12})?$"
+              "pattern": "^(?!0+(?:\\.0+)?$)\\d{1,16}(\\.\\d{1,12})?$"
             },
             "rateType": {
               "type": "string",
