@@ -99,6 +99,10 @@ All insight responses are printed with dates and sources. `null` research is una
 
 The scope is the partner insight and data lifecycle documented above. User profiling, brokerage, strategy recommendations, chat and iframe products are separate integration guides and are not inserted into this walkthrough.
 
+## Proposed event feeds
+
+The [event-feed design and sample payloads](event-feeds/README.md) describe a standard Motif broker, connectors from existing partner brokers, and planned TypeScript/Java pub/sub support. This is a proposal; the three executable implementations currently use REST and signed webhooks.
+
 ## Contributing
 
 Keep all three implementations and GitBook aligned in the same change. Add a missing documented step before adding it to an implementation. See [DEVELOPMENT.md](DEVELOPMENT.md) for checks and release preparation. Additional language examples should follow the same sections and payloads.

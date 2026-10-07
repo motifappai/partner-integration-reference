@@ -1,0 +1,18 @@
+{
+  "specversion": "1.0",
+  "id": "31e9e260-9e24-4be5-81df-870498d0fe81",
+  "source": "urn:partner:example:security-master",
+  "type": "ai.motif.asset.master.v1",
+  "subject": "instrument/security-42",
+  "time": "2026-10-07T08:00:00Z",
+  "datacontenttype": "application/json",
+  "data": {
+    "externalId": "security-42",
+    "asOf": "2026-10-07T07:59:00Z",
+    "revision": 1,
+    "action": "MAP_EXISTING",
+    "assetId": "verified-motif-asset-id",
+    "currency": "USD",
+    "priceProvider": "CUSTOM"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "specversion": "1.0",
+  "id": "3491fcdc-0777-4b55-8f0a-8e268a38c5fc",
+  "source": "urn:partner:example:market-data",
+  "type": "ai.motif.fx.rate.v1",
+  "subject": "fx/USD-NZD",
+  "time": "2026-10-07T08:00:02Z",
+  "datacontenttype": "application/json",
+  "data": {
+    "baseCurrency": "USD",
+    "quoteCurrency": "NZD",
+    "asOf": "2026-10-07T08:00:00Z",
+    "revision": 1,
+    "rate": "1.65000000",
+    "rateType": "MID"
+  }
+}
