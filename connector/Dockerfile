@@ -1,4 +1,6 @@
 FROM node:24.18.0-bookworm-slim
+LABEL org.opencontainers.image.source="https://github.com/motifappai/partner-integration-reference"
+LABEL org.opencontainers.image.description="Motif partner RabbitMQ connector"
 WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm ci --omit=dev --ignore-scripts && npm cache clean --force

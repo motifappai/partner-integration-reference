@@ -1,7 +1,6 @@
 services:
   connector:
-    build: .
-    image: motif-partner-connector:0.1.0
+    image: ghcr.io/motifappai/partner-integration-reference:connector-v0.1.0
     restart: unless-stopped
     init: true
     read_only: true

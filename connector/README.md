@@ -9,12 +9,18 @@ Follow the [GitBook blueprint](https://motif.gitbook.io/motif-docs/integrate-wit
 1. Motif provisions a separate virtual host and credentials for each organization and environment. The sandbox is a different organization from production. Motif's ingestion service binds the virtual host to the organization; an event cannot select a tenant.
 2. The partner provisions a dedicated integration queue on its existing broker. Bind it to the partner's exchange. Do not consume an existing application work queue. Provide separate return and quarantine exchanges/queues.
 3. Copy `config.example.json` to `config.json`. Replace the organization ID and connection names. Put the two AMQP URLs and CA certificates into `secrets/`, with access restricted to the container's user. URL format: `amqps://USER:PASSWORD@HOST:5671/VHOST?heartbeat=30`; percent-encode URL components. Never commit secrets.
-4. Run `docker compose -f connector/compose.yml up -d --build` from the repository root. `/health` reports process liveness; `/ready` reports every connection and returns 503 if any is unavailable. Keep health endpoints internal.
+4. From the repository root, run `docker compose -f connector/compose.yml pull`, then `docker compose -f connector/compose.yml up -d`. No registry login is needed. `/health` reports process liveness; `/ready` reports every connection and returns 503 if any is unavailable. Keep health endpoints internal.
 5. Run the reference lifecycle in a provisioned sandbox. Agree acceptance, then provision separate production connections and keys.
 
 The container runs as UID/GID 1000, without root or a writable filesystem. Make mounted secret files readable by that identity. TLS certificate verification cannot be disabled. Client certificates are supported through paired `certificateFile` and `keyFile` fields. Omit `caFile` to use system trust. Reload credentials/configuration by restarting the container.
 
-The image builds locally as `motif-partner-connector:0.1.0`. Release tags `connector-vX.Y.Z` run broker tests and publish an amd64/arm64 image to `ghcr.io/motifappai/partner-integration-reference:connector-vX.Y.Z`. A configured workflow is not evidence that a tag or image has been published. Pin the released image digest in production.
+The public image supports Linux amd64 and arm64:
+
+```bash
+docker pull ghcr.io/motifappai/partner-integration-reference:connector-v0.1.0
+```
+
+Release tags `connector-vX.Y.Z` run broker tests, publish the image and verify a pull without registry credentials. Pin the released image digest in production. Building from source is only needed when developing the connector; see [maintainer instructions](../DEVELOPMENT.md).
 
 ## Hosting
 
