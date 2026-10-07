@@ -21,7 +21,11 @@ async function close(server: Server) {
   )
 }
 
-async function exercise(implementation: 'sdk' | 'rest') {
+async function exercise(
+  implementation: 'sdk' | 'rest' | 'java',
+  mapping: 'local' | 'motif',
+  ignoreExternalId = false
+) {
   const allocation = createServer()
   const receiverPort = await listen(allocation)
   await close(allocation)
@@ -29,6 +33,7 @@ async function exercise(implementation: 'sdk' | 'rest') {
   const documentPath = join(directory, 'factsheet.pdf')
   await writeFile(documentPath, '%PDF-1.7\nContract-test upload bytes\n%%EOF')
   let secret = 'whsec_contract_fixture'
+  let storedReference: unknown
   let revision = 0
   let snapshotBody: unknown
   let publicationsSent = false
@@ -124,8 +129,19 @@ async function exercise(implementation: 'sdk' | 'rest') {
         content = { success: true, statusCode: 204, duration: 1, error: null }
       } else if (path === '/v1/sdk/clarity/market-update') content = null
       else if (path === '/v1/sdk/assets' && request.method === 'GET') {
-        if (url.searchParams.get('query') === 'BHP')
-          content = { assets: [], nextCursor: null }
+        assert.equal(
+          url.searchParams.has('query'),
+          false,
+          'Browse the full catalog, not a hardcoded ticker search'
+        )
+        if (url.searchParams.has('externalId'))
+          content = {
+            assets:
+              ignoreExternalId || url.searchParams.get('externalId') === storedReference
+                ? [{ id: 'apple-id', externalId: storedReference }]
+                : [],
+            nextCursor: null,
+          }
         else if (url.searchParams.has('cursor'))
           content = {
             assets: [
@@ -152,6 +168,12 @@ async function exercise(implementation: 'sdk' | 'rest') {
             ],
             nextCursor: 'page-2',
           }
+      } else if (path === '/v1/sdk/assets/apple-id' && request.method === 'PATCH') {
+        assert.equal(mapping, 'motif')
+        assert.equal(record(payload).currency, 'USD')
+        assert.equal(record(payload).priceProvider, undefined)
+        storedReference = record(payload).externalId
+        content = { id: 'apple-id', externalId: storedReference }
       } else if (path === '/v1/sdk/clarity/assets/apple-id') content = null
       else if (path.startsWith('/v1/sdk/portfolios/reference-')) {
         if (request.method === 'PUT') {
@@ -221,10 +243,15 @@ async function exercise(implementation: 'sdk' | 'rest') {
   const port = await listen(server)
   try {
     const child = spawn(
-      process.execPath,
+      implementation === 'java'
+        ? `${process.env.JAVA_HOME}/bin/java`
+        : process.execPath,
       [
-        `${implementation}/main.ts`,
+        ...(implementation === 'java'
+          ? ['-jar', 'java/reference/target/quarkus-app/quarkus-run.jar']
+          : [`${implementation}/main.ts`]),
         '--apply',
+        `--mapping=${mapping}`,
         '--assets',
         `--document=${documentPath}`,
         '--archive',
@@ -256,8 +283,29 @@ async function exercise(implementation: 'sdk' | 'rest') {
     })
     clearTimeout(timeout)
     assert.deepEqual(failures, [], output)
+    if (ignoreExternalId) {
+      assert.notEqual(exitCode, 0, output)
+      assert.match(output, /Exact custom reference lookup failed/)
+      assert.ok(!operations.includes('POST /v1/sdk/assets'))
+      assert.ok(!operations.includes('PATCH /v1/sdk/assets/custom-id'))
+      assert.equal(snapshots.length, 0)
+      return operations
+    }
     assert.equal(exitCode, 0, output)
     assert.equal(snapshots.length, 3)
+    assert.deepEqual(record(snapshots[0]).holdings, [
+      {
+        instrument: { type: 'ASSET', assetId: 'apple-id' },
+        quantity: '10',
+        currency: 'USD',
+      },
+      {
+        instrument: { type: 'ASSET', assetId: 'custom-id' },
+        quantity: '5',
+        currency: 'USD',
+      },
+    ])
+    assert.equal(storedReference !== undefined, mapping === 'motif')
     assert.deepEqual(snapshots[1], snapshots[2])
     assert.equal(record(snapshots[0]).cash, '1000')
     assert.equal(record(snapshots[1]).cash, '600')
@@ -283,19 +331,36 @@ async function exercise(implementation: 'sdk' | 'rest') {
   }
 }
 
-test('SDK and REST execute the same documented lifecycle against an HTTP contract fixture', {
-  timeout: 60_000,
-}, async () => {
-  const sdkOperations = await exercise('sdk')
-  const restOperations = await exercise('rest')
-  assert.deepEqual(restOperations, sdkOperations)
-  assert.deepEqual(restOperations.slice(0, 7), [
-    'POST /v1/sdk/webhooks',
-    'POST /v1/sdk/webhooks/subscription-id/test',
-    'POST /v1/sdk/clarity/market-update',
-    'GET /v1/sdk/assets',
-    'GET /v1/sdk/assets',
-    'GET /v1/sdk/clarity/assets/apple-id',
-    'PUT /v1/sdk/portfolios/account',
-  ])
-})
+for (const mapping of ['local', 'motif'] as const) {
+  test(`Reference implementations execute the documented lifecycle with ${mapping} mappings`, {
+    timeout: 60_000,
+  }, async () => {
+    const sdkOperations = await exercise('sdk', mapping)
+    const restOperations = await exercise('rest', mapping)
+    assert.deepEqual(restOperations, sdkOperations)
+    if (process.env.MOTIF_TEST_JAVA === '1')
+      assert.deepEqual(await exercise('java', mapping), sdkOperations)
+    assert.deepEqual(restOperations.slice(0, 4), [
+      'POST /v1/sdk/webhooks',
+      'POST /v1/sdk/webhooks/subscription-id/test',
+      'GET /v1/sdk/assets',
+      'GET /v1/sdk/assets',
+    ])
+    assert.ok(
+      restOperations.indexOf('POST /v1/sdk/assets') <
+        restOperations.indexOf('PUT /v1/sdk/portfolios/account')
+    )
+  })
+}
+
+for (const implementation of ['sdk', 'rest'] as const) {
+  test(`${implementation} refuses an API that ignores exact reference lookup`, async () => {
+    await exercise(implementation, 'local', true)
+  })
+}
+
+if (process.env.MOTIF_TEST_JAVA === '1') {
+  test('Java refuses an API that ignores exact reference lookup', async () => {
+    await exercise('java', 'local', true)
+  })
+}

@@ -80,17 +80,12 @@ async function main() {
     show('Subscription ID (secret held in memory)', subscriptionId)
     await testSubscription(subscriptionId)
 
-    console.log('\n2. Read market updates and asset insights')
-    show(
-      'Market update; null means not yet available',
-      await motif.clarity.marketUpdate({ language: 'en' })
-    )
+    console.log('\n2. Discover and map assets')
     let cursor: string | undefined
     let assetId: string | undefined
     do {
       const candidates = record(
         await motif.assets.list({
-          query: 'AAPL',
           limit: 50,
           ...(cursor ? { cursor } : {}),
         })
@@ -107,6 +102,10 @@ async function main() {
               'More than one NASDAQ AAPL listing; resolve the instrument mapping before continuing'
             )
           assetId = text(asset.id)
+          if (config.mapping === 'motif' && asset.externalId != null)
+            throw new Error(
+              'This listing already has an external reference; preserve it and use --mapping=local'
+            )
           show('Selected Apple listing; verify name and exchange', asset)
         }
       }
@@ -116,50 +115,51 @@ async function main() {
       throw new Error(
         'No NASDAQ AAPL equity in the catalog; resolve the listing with Motif'
       )
-    show(
-      'Asset insight; null means not yet available',
-      await motif.clarity.assetById(assetId, { language: 'en' })
-    )
-
-    console.log('\n3. Create a portfolio')
-    const initialSnapshot = snapshot(1)
-    show('Initial complete snapshot', initialSnapshot)
-    const receipt = record(
-      await motif.portfolios.putSnapshot(config.externalId, initialSnapshot)
-    )
-    portfolioId = text(receipt.portfolioId)
-    show('Store externalId → portfolioId', {
-      externalId: config.externalId,
-      ...receipt,
-    })
-    await waitForCalculation(() => motif.portfolios.get(config.externalId), 1)
-
-    console.log('\n4. Update a portfolio')
-    const updatedSnapshot = snapshot(2)
-    show('Replacement complete snapshot', updatedSnapshot)
-    await motif.portfolios.putSnapshot(config.externalId, updatedSnapshot)
-    await motif.portfolios.putSnapshot(config.externalId, updatedSnapshot)
-    await waitForCalculation(() => motif.portfolios.get(config.externalId), 2)
-
-    console.log('\n5. Read portfolio insights')
-    show(
-      'Portfolio insight; card/read may be null',
-      await motif.clarity.portfolioById(portfolioId, { language: 'en', window: '1D' })
-    )
-
-    if (config.assets) {
-      console.log('\n6. Supply your own assets, prices or documents')
-      show('Asset search', await motif.assets.list({ query: 'BHP', limit: 50 }))
-      const customAsset = record(
-        await motif.assets.create({
-          externalId: `${config.runId}-private-fund-a`,
-          name: 'Private Fund A',
-          symbol: 'PFA',
-          currency: 'USD',
-          description: 'Partner supplied private fund units',
-        })
+    const externalAssetId = `${config.runId}-security-apple`
+    if (config.mapping === 'motif') {
+      await motif.assets.update(assetId, {
+        externalId: externalAssetId,
+        currency: 'USD',
+      })
+      const mapped = await motif.assets.list({ externalId: externalAssetId, limit: 1 })
+      if (
+        mapped.assets[0]?.id !== assetId ||
+        mapped.assets[0]?.externalId !== externalAssetId
       )
-      const customAssetId = text(customAsset.id)
+        throw new Error('Asset mapping was not persisted')
+      show('Organization asset reference stored in Motif', mapped.assets[0])
+    } else {
+      show('Save this mapping in your own instrument database', {
+        externalId: externalAssetId,
+        assetId,
+      })
+    }
+    let customAssetId: string | undefined
+    if (config.assets) {
+      console.log('Create an unmatched custom instrument and supply prices')
+      const customExternalId = `${config.runId}-private-fund-a`
+      const existing = record(
+        await motif.assets.list({ externalId: customExternalId, limit: 1 })
+      )
+      const existingAsset = array(existing.assets)[0]
+      if (existingAsset) {
+        const identity = record(existingAsset)
+        if (identity.externalId !== customExternalId || identity.category !== 'CUSTOM')
+          throw new Error(
+            'Exact custom reference lookup failed; verify the API release and instrument mapping'
+          )
+      }
+      const customAsset = record(
+        existingAsset ??
+          (await motif.assets.create({
+            externalId: customExternalId,
+            name: 'Private Fund A',
+            symbol: 'PFA',
+            currency: 'USD',
+            description: 'Partner supplied private fund units',
+          }))
+      )
+      customAssetId = text(customAsset.id)
       show('Custom asset', await motif.assets.get(customAssetId))
       await motif.assets.update(customAssetId, {
         currency: 'USD',
@@ -204,7 +204,8 @@ async function main() {
         })
         if (!stored.ok) throw new Error(`Storage upload failed: HTTP ${stored.status}`)
         await motif.assets.finalizeDocument(customAssetId, documentId)
-        await waitForDocument(() => motif.assets.document(customAssetId, documentId))
+        const documentAssetId = customAssetId
+        await waitForDocument(() => motif.assets.document(documentAssetId, documentId))
       }
       if (!config.document)
         console.log('NOT EXERCISED: optional document upload (use --document).')
@@ -212,6 +213,42 @@ async function main() {
       console.log(
         'NOT EXERCISED: optional assets, prices and documents (use --assets / --document).'
       )
+
+    console.log('\n3. Read market updates and asset insights')
+    show(
+      'Market update; null means not yet available',
+      await motif.clarity.marketUpdate({ language: 'en' })
+    )
+    show(
+      'Asset insight; null means not yet available',
+      await motif.clarity.assetById(assetId, { language: 'en' })
+    )
+
+    console.log('\n4. Create a portfolio')
+    const initialSnapshot = snapshot(1, assetId, customAssetId)
+    show('Initial complete snapshot', initialSnapshot)
+    const receipt = record(
+      await motif.portfolios.putSnapshot(config.externalId, initialSnapshot)
+    )
+    portfolioId = text(receipt.portfolioId)
+    show('Store externalId → portfolioId', {
+      externalId: config.externalId,
+      ...receipt,
+    })
+    await waitForCalculation(() => motif.portfolios.get(config.externalId), 1)
+
+    console.log('\n5. Update a portfolio')
+    const updatedSnapshot = snapshot(2, assetId, customAssetId)
+    show('Replacement complete snapshot', updatedSnapshot)
+    await motif.portfolios.putSnapshot(config.externalId, updatedSnapshot)
+    await motif.portfolios.putSnapshot(config.externalId, updatedSnapshot)
+    await waitForCalculation(() => motif.portfolios.get(config.externalId), 2)
+
+    console.log('\n6. Read portfolio insights')
+    show(
+      'Portfolio insight; card/read may be null',
+      await motif.clarity.portfolioById(portfolioId, { language: 'en', window: '1D' })
+    )
 
     console.log('\n7. Keep the integration running')
     console.log(
