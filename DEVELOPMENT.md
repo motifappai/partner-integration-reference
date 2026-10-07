@@ -34,23 +34,17 @@ npm test
 
 Do not replace the declared SDK dependency with a workspace path or commit the tarball. `npm pack` on the monorepo source leaves `catalog:` dependencies unresolved; use `pnpm pack`. When `0.2.0` is publicly available, install from npm in a clean checkout, commit the resulting `sdk/package-lock.json`, rerun the checks and sandbox walkthroughs, and update the release-status notices here and in GitBook. Only that clean installation verifies the public package.
 
-## Publish the repository and connect the submodule
+## Update the parent submodule
 
-The local repository has no GitHub origin yet. The Motif parent checkout temporarily records a local submodule URL. Do not merge that parent change until the repository has a public origin and the URL is portable.
+The public repository is [motifappai/partner-integration-referenc](https://github.com/motifappai/partner-integration-referenc). Push a reviewed reference commit to its origin before updating the Motif parent repository's `examples/partner-integration` pointer.
 
-After the repository exists, set `REFERENCE_ORIGIN` to its actual Git URL and run in this repository:
-
-```bash
-git remote add origin "$REFERENCE_ORIGIN"
-git push -u origin main
-```
-
-Then in the Motif parent checkout:
+From the Motif parent checkout, select the reference commit you intend to release:
 
 ```bash
-git submodule set-url examples/partner-integration "$REFERENCE_ORIGIN"
-git submodule sync -- examples/partner-integration
-git add .gitmodules examples/partner-integration
+git submodule update --init examples/partner-integration
+git -C examples/partner-integration fetch origin
+git -C examples/partner-integration checkout "$REFERENCE_COMMIT"
+git add examples/partner-integration
 ```
 
-Verify a fresh recursive clone before merging the parent change. Keep the referenced commit available on the public origin. Add the actual public repository link to GitBook when the destination exists; do not publish a guessed link.
+Set `REFERENCE_COMMIT` to the verified commit SHA. Keep that commit available on the public origin and verify a fresh submodule checkout before merging the parent change. Run the independent checks above whenever the reference code changes.
