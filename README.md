@@ -8,7 +8,7 @@ Three executable versions of [Integrate insights into your app](https://motif.gi
 
 All three follow the same guide, request bodies and order. Each organization has separate sandbox and production environments. Run these examples in the sandbox, review the results with Motif, then configure your own production integration. The examples reject Motif's production host.
 
-**SDK release status:** the example targets `0.2.0`, which contains the required methods. As checked on 7 October 2026, npm publishes only `0.1.1`–`0.1.3`; the SDK installation below will work after Motif publishes `0.2.0`. REST needs no SDK package, but the new mapping PATCH and exact `externalId` filter require the matching API release. Confirm those operations in your sandbox Swagger before running this revision. Maintainers can validate a packaged release using [DEVELOPMENT.md](DEVELOPMENT.md). A local package test is not verification of a published npm release.
+**SDK version:** the TypeScript example requires `@motif-ai/sdk@0.2.0`. Publication is pending npm publisher access; use the REST implementation until it is available. The asset-reference PATCH and exact `externalId` filter require the matching API release in your sandbox.
 
 ## Run one implementation
 
@@ -35,7 +35,7 @@ npm run rest -- --apply
 ```
 
 ```bash
-# SDK: requires the 0.2.0 release described above
+# TypeScript SDK: after 0.2.0 is published
 npm install --prefix sdk
 npm run sdk
 npm run sdk -- --apply

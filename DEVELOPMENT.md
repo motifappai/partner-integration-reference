@@ -2,10 +2,11 @@
 
 The repository is independently versioned. The TypeScript reference depends on the public npm SDK; `rest/` uses Node.js alone. The Java reference depends on the Java SDK built in the same Maven reactor. Do not add monorepo imports, workspace dependency ranges, private API calls, generated SDK output, credentials or copied build output.
 
-Run these from the repository root after installing the required SDK release:
+Run these from the repository root once the required SDK version is published:
 
 ```bash
 npm ci
+npm install --prefix sdk
 npm run typecheck
 npm test
 npm run rest
@@ -16,7 +17,7 @@ The tests exercise signatures, organization boundaries, duplicate delivery, fail
 
 ## Validate an unpublished SDK candidate
 
-SDK `0.2.0` is not on npm as of 7 October 2026. Build and pack it in the Motif checkout with pnpm, which resolves its catalog dependency versions:
+For a future unpublished release, build and pack the candidate in the Motif checkout with pnpm, which resolves its catalog dependency versions:
 
 ```bash
 pnpm --dir packages/sdk build
@@ -32,7 +33,7 @@ npm run typecheck
 npm test
 ```
 
-Do not replace the declared SDK dependency with a workspace path or commit the tarball. `npm pack` on the monorepo source leaves `catalog:` dependencies unresolved; use `pnpm pack`. When `0.2.0` is publicly available, install from npm in a clean checkout, commit the resulting `sdk/package-lock.json`, rerun the checks and sandbox walkthroughs, and update the release-status notices here and in GitBook. Only that clean installation verifies the public package.
+Do not replace the declared SDK dependency with a workspace path or commit the tarball. `npm pack` on the monorepo source leaves `catalog:` dependencies unresolved; use `pnpm pack`. For each published release, update the pinned dependency and `sdk/package-lock.json`, install from npm in a clean checkout, and rerun the focused checks and sandbox walkthroughs. Contract tests verify the installed package against fixtures; only sandbox walkthroughs verify the deployed integration.
 
 ## Update the parent submodule
 
