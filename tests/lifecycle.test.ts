@@ -22,7 +22,7 @@ async function close(server: Server) {
 }
 
 async function exercise(
-  implementation: 'sdk' | 'rest',
+  implementation: 'sdk' | 'rest' | 'java',
   mapping: 'local' | 'motif',
   ignoreExternalId = false
 ) {
@@ -243,9 +243,13 @@ async function exercise(
   const port = await listen(server)
   try {
     const child = spawn(
-      process.execPath,
+      implementation === 'java'
+        ? `${process.env.JAVA_HOME}/bin/java`
+        : process.execPath,
       [
-        `${implementation}/main.ts`,
+        ...(implementation === 'java'
+          ? ['-jar', 'java/reference/target/quarkus-app/quarkus-run.jar']
+          : [`${implementation}/main.ts`]),
         '--apply',
         `--mapping=${mapping}`,
         '--assets',
@@ -328,12 +332,14 @@ async function exercise(
 }
 
 for (const mapping of ['local', 'motif'] as const) {
-  test(`SDK and REST execute the documented lifecycle with ${mapping} mappings`, {
+  test(`Reference implementations execute the documented lifecycle with ${mapping} mappings`, {
     timeout: 60_000,
   }, async () => {
     const sdkOperations = await exercise('sdk', mapping)
     const restOperations = await exercise('rest', mapping)
     assert.deepEqual(restOperations, sdkOperations)
+    if (process.env.MOTIF_TEST_JAVA === '1')
+      assert.deepEqual(await exercise('java', mapping), sdkOperations)
     assert.deepEqual(restOperations.slice(0, 4), [
       'POST /v1/sdk/webhooks',
       'POST /v1/sdk/webhooks/subscription-id/test',
@@ -350,5 +356,11 @@ for (const mapping of ['local', 'motif'] as const) {
 for (const implementation of ['sdk', 'rest'] as const) {
   test(`${implementation} refuses an API that ignores exact reference lookup`, async () => {
     await exercise(implementation, 'local', true)
+  })
+}
+
+if (process.env.MOTIF_TEST_JAVA === '1') {
+  test('Java refuses an API that ignores exact reference lookup', async () => {
+    await exercise('java', 'local', true)
   })
 }

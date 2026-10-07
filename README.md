@@ -1,17 +1,18 @@
 # Motif partner reference implementations
 
-Two executable versions of [Integrate insights into your app](https://motif.gitbook.io/motif-docs/integrate-with-motif/partner-data-and-insights):
+Three executable versions of [Integrate insights into your app](https://motif.gitbook.io/motif-docs/integrate-with-motif/partner-data-and-insights):
 
 - [TypeScript SDK](sdk/main.ts) calls `@motif-ai/sdk`.
 - [REST API](rest/main.ts) uses Node.js `fetch`, with no SDK or runtime dependencies.
+- [Java 25 / Jakarta](java/README.md) uses the Java SDK in a Jakarta REST/CDI application.
 
-Both follow the same guide, request bodies and order. Each organization has separate sandbox and production environments. Run these examples in the sandbox, review the results with Motif, then configure your own production integration. The examples reject Motif's production host.
+All three follow the same guide, request bodies and order. Each organization has separate sandbox and production environments. Run these examples in the sandbox, review the results with Motif, then configure your own production integration. The examples reject Motif's production host.
 
 **SDK release status:** the example targets `0.2.0`, which contains the required methods. As checked on 7 October 2026, npm publishes only `0.1.1`–`0.1.3`; the SDK installation below will work after Motif publishes `0.2.0`. REST needs no SDK package, but the new mapping PATCH and exact `externalId` filter require the matching API release. Confirm those operations in your sandbox Swagger before running this revision. Maintainers can validate a packaged release using [DEVELOPMENT.md](DEVELOPMENT.md). A local package test is not verification of a published npm release.
 
 ## Run one implementation
 
-Use Node.js 24.18 or newer. This repository works on its own; no Motif monorepo, database, workspace packages or build step is needed.
+For TypeScript and REST, use Node.js 24.18 or newer; neither needs a build step. For Java, follow the [Java build and run instructions](java/README.md) with JDK 25 and Maven 3.9+. This repository works independently of the Motif monorepo, database and workspace packages.
 
 Clone the [public repository](https://github.com/motifappai/partner-integration-reference), then configure your environment:
 
@@ -40,11 +41,11 @@ npm run sdk
 npm run sdk -- --apply
 ```
 
-Without `--apply`, the command prints the sequence and makes no requests. Run one implementation at a time; both use the same receiver port. Each run creates a unique external account ID ending in `account-42-a` so it cannot overwrite a previous example account. The quantities and cash match GitBook; timestamps use the current observation time instead of the guide's illustrative dates.
+Without `--apply`, the command prints the sequence and makes no requests. Run one implementation at a time; all use the same receiver port. Each run creates a unique external account ID ending in `account-42-a` so it cannot overwrite a previous example account. The quantities and cash match GitBook; timestamps use the current observation time instead of the guide's illustrative dates.
 
 ## Follow the guide in the code
 
-| GitBook section | What both implementations do |
+| GitBook section | What all implementations do |
 | --- | --- |
 | Subscribe and receive a webhook | Register `assessment.published`, configure signature verification, verify delivery of a signed test |
 | Discover and map assets | Paginate the full visible catalog, match NASDAQ `AAPL`, keep a local mapping or store your reference in Motif; optionally create and price an unmatched custom instrument |
@@ -67,7 +68,7 @@ npm run rest -- --apply --mapping=motif
 
 All snapshots use `{type: 'ASSET', assetId}` for the chosen instruments. Market and asset insight reads do not need a portfolio. Asset notifications currently require that your organization holds that asset in an active portfolio.
 
-The two `main.ts` files show every Motif call. `rest/http.ts` adds authentication, JSON handling and a request timeout; it does not wrap SDK methods. `shared/` contains the common configuration, example snapshots, polling and receiver, with no SDK imports. REST signature verification is in `rest/signature.ts`; the SDK example uses the SDK helper.
+The two `main.ts` files and Java’s [`Lifecycle`](java/reference/src/main/java/ai/motif/reference/Lifecycle.java) show every Motif call. `rest/http.ts` adds authentication, JSON handling and a request timeout; it does not wrap SDK methods. `shared/` contains the common configuration, example snapshots, polling and receiver, with no SDK imports. REST signature verification is in `rest/signature.ts`; the SDK example uses the SDK helper.
 
 ## Optional assets, prices and documents
 
@@ -100,4 +101,4 @@ The scope is the partner insight and data lifecycle documented above. User profi
 
 ## Contributing
 
-Keep both implementations and GitBook aligned in the same change. Add a missing documented step before adding it to an implementation. See [DEVELOPMENT.md](DEVELOPMENT.md) for checks and release preparation. A future language example should follow the same sections and payloads.
+Keep all three implementations and GitBook aligned in the same change. Add a missing documented step before adding it to an implementation. See [DEVELOPMENT.md](DEVELOPMENT.md) for checks and release preparation. Additional language examples should follow the same sections and payloads.
