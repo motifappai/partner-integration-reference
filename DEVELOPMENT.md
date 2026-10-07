@@ -36,7 +36,7 @@ Do not replace the declared SDK dependency with a workspace path or commit the t
 
 ## Update the parent submodule
 
-The public repository is [motifappai/partner-integration-referenc](https://github.com/motifappai/partner-integration-referenc). Push a reviewed reference commit to its origin before updating the Motif parent repository's `examples/partner-integration` pointer.
+The public repository is [motifappai/partner-integration-reference](https://github.com/motifappai/partner-integration-reference). Push a reviewed reference commit to its origin before updating the Motif parent repository's `examples/partner-integration` pointer.
 
 From the Motif parent checkout, select the reference commit you intend to release:
 

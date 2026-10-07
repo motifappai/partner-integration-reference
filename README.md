@@ -13,11 +13,11 @@ Both follow the same guide, request bodies and order. Each organization has sepa
 
 Use Node.js 24.18 or newer. This repository works on its own; no Motif monorepo, database, workspace packages or build step is needed.
 
-Clone the [public repository](https://github.com/motifappai/partner-integration-referenc), then configure your environment:
+Clone the [public repository](https://github.com/motifappai/partner-integration-reference), then configure your environment:
 
 ```bash
-git clone https://github.com/motifappai/partner-integration-referenc.git
-cd partner-integration-referenc
+git clone https://github.com/motifappai/partner-integration-reference.git
+cd partner-integration-reference
 cp .env.example .env
 ```
 
