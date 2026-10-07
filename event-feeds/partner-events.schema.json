@@ -37,69 +37,118 @@
           "const": "application/json"
         },
         "data": {
-          "type": "object",
-          "properties": {
-            "externalId": {
-              "type": "string",
-              "minLength": 1,
-              "maxLength": 128
+          "oneOf": [
+            {
+              "type": "object",
+              "properties": {
+                "externalId": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "asOf": {
+                  "type": "string",
+                  "format": "date-time",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+                },
+                "revision": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 2147483647
+                },
+                "currency": {
+                  "type": "string",
+                  "pattern": "^[A-Z]{3}$"
+                },
+                "description": {
+                  "type": "string",
+                  "maxLength": 20000
+                },
+                "action": {
+                  "type": "string",
+                  "const": "MAP_EXISTING"
+                },
+                "assetId": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "priceProvider": {
+                  "type": "string",
+                  "enum": [
+                    "MARKET",
+                    "CUSTOM"
+                  ]
+                }
+              },
+              "required": [
+                "externalId",
+                "asOf",
+                "revision",
+                "currency",
+                "action",
+                "assetId",
+                "priceProvider"
+              ],
+              "additionalProperties": false
             },
-            "asOf": {
-              "type": "string",
-              "format": "date-time",
-              "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
-            },
-            "revision": {
-              "type": "integer",
-              "minimum": 1,
-              "maximum": 2147483647
-            },
-            "action": {
-              "type": "string",
-              "enum": [
-                "MAP_EXISTING",
-                "CREATE_CUSTOM"
-              ]
-            },
-            "assetId": {
-              "type": "string",
-              "minLength": 1
-            },
-            "currency": {
-              "type": "string",
-              "pattern": "^[A-Z]{3}$"
-            },
-            "priceProvider": {
-              "type": "string",
-              "enum": [
-                "MARKET",
-                "CUSTOM"
-              ]
-            },
-            "name": {
-              "type": "string",
-              "minLength": 1,
-              "maxLength": 200
-            },
-            "symbol": {
-              "type": "string",
-              "minLength": 1,
-              "maxLength": 32
-            },
-            "description": {
-              "type": "string",
-              "maxLength": 20000
+            {
+              "type": "object",
+              "properties": {
+                "externalId": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "asOf": {
+                  "type": "string",
+                  "format": "date-time",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+                },
+                "revision": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 2147483647
+                },
+                "currency": {
+                  "type": "string",
+                  "pattern": "^[A-Z]{3}$"
+                },
+                "description": {
+                  "type": "string",
+                  "maxLength": 20000
+                },
+                "action": {
+                  "type": "string",
+                  "const": "CREATE_CUSTOM"
+                },
+                "name": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 200
+                },
+                "symbol": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 32
+                },
+                "priceProvider": {
+                  "type": "string",
+                  "const": "CUSTOM"
+                }
+              },
+              "required": [
+                "externalId",
+                "asOf",
+                "revision",
+                "currency",
+                "action",
+                "name",
+                "symbol",
+                "priceProvider"
+              ],
+              "additionalProperties": false
             }
-          },
-          "required": [
-            "externalId",
-            "asOf",
-            "revision",
-            "action",
-            "currency",
-            "priceProvider"
-          ],
-          "additionalProperties": false
+          ]
         }
       },
       "required": [
