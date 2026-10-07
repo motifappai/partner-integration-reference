@@ -7,7 +7,7 @@ Two executable versions of [Integrate insights into your app](https://motif.gitb
 
 Both follow the same guide, request bodies and order. Each organization has separate sandbox and production environments. Run these examples in the sandbox, review the results with Motif, then configure your own production integration. The examples reject Motif's production host.
 
-**SDK release status:** the example targets `0.2.0`, which contains the required methods. As checked on 7 October 2026, npm publishes only `0.1.1`–`0.1.3`; the SDK installation below will work after Motif publishes `0.2.0`. Use REST now. Maintainers can validate a packaged release using [DEVELOPMENT.md](DEVELOPMENT.md). A local package test is not verification of a published npm release.
+**SDK release status:** the example targets `0.2.0`, which contains the required methods. As checked on 7 October 2026, npm publishes only `0.1.1`–`0.1.3`; the SDK installation below will work after Motif publishes `0.2.0`. REST needs no SDK package, but the new mapping PATCH and exact `externalId` filter require the matching API release. Confirm those operations in your sandbox Swagger before running this revision. Maintainers can validate a packaged release using [DEVELOPMENT.md](DEVELOPMENT.md). A local package test is not verification of a published npm release.
 
 ## Run one implementation
 
@@ -47,14 +47,25 @@ Without `--apply`, the command prints the sequence and makes no requests. Run on
 | GitBook section | What both implementations do |
 | --- | --- |
 | Subscribe and receive a webhook | Register `assessment.published`, configure signature verification, verify delivery of a signed test |
-| Read market updates and asset insights | Read the market update, search all pages for NASDAQ `AAPL`, verify the listing, read its asset insight |
-| Create a portfolio | Send revision 1: 10 Apple shares and USD 1,000 cash; retain both IDs; wait for valuation |
+| Discover and map assets | Paginate the full visible catalog, match NASDAQ `AAPL`, keep a local mapping or store your reference in Motif; optionally create and price an unmatched custom instrument |
+| Read market updates and asset insights | Read the market update and selected asset insight |
+| Create a portfolio | Send revision 1: 10 Apple shares and USD 1,000 cash (plus five custom fund units with `--assets`); retain both IDs; wait for valuation |
 | Update a portfolio | Replace the complete snapshot with revision 2: 12 shares and USD 600 cash; retry the exact request; read back the valuation |
 | Read portfolio insights | Use the returned portfolio ID, requesting English and window `1D` |
-| Supply your own assets, prices or documents | Optional: create a custom asset, read/update it, send and correct a price, inspect history, upload and process a PDF |
 | Keep the integration running | Fetch content for verified events in their language, inspect deliveries, replay a real event if available, pause/rotate/resume and retest; optionally archive the account |
 
-`AAPL` is a stock ticker, not a Motif asset ID. The search checks its exchange and category and prints its name for review. Your integration should validate mappings against your custodian or security master and store the returned IDs. The example fails on a missing or ambiguous listing. Market and asset insight reads do not need a portfolio. Asset notifications currently require that your organization holds that asset in an active portfolio.
+The catalog lists available public and organization-private instruments, not guaranteed pricing or research coverage. `AAPL` is a ticker, not a Motif asset ID. The example paginates without a search query, checks exchange and category, and prints the name for review. Missing or ambiguous listings stop the run. If your source contains an ISIN, resolve the exact listing through your custodian/security master; Motif does not currently resolve ISINs. Do not automatically create a custom instrument for an uncertain match.
+
+Choose where to keep your verified mapping:
+
+```bash
+npm run rest -- --apply --mapping=local
+npm run rest -- --apply --mapping=motif
+```
+
+`local` is the default: the example prints your reference and Motif asset ID for storage in your own database. `motif` PATCHes an organization-specific `externalId`, then confirms it with an exact lookup. It supplies USD on first configuration and preserves the price provider. It refuses to overwrite an existing reference; use local mode on subsequent runs or deliberately reconcile that mapping first. A stored reference remains after exit. Your production reference should be stable, such as a security-master listing ID; this sandbox example uses a unique run prefix. References are unique per organization, not global, and a bare ISIN may need a listing suffix if you hold several listings.
+
+All snapshots use `{type: 'ASSET', assetId}` for the chosen instruments. Market and asset insight reads do not need a portfolio. Asset notifications currently require that your organization holds that asset in an active portfolio.
 
 The two `main.ts` files show every Motif call. `rest/http.ts` adds authentication, JSON handling and a request timeout; it does not wrap SDK methods. `shared/` contains the common configuration, example snapshots, polling and receiver, with no SDK imports. REST signature verification is in `rest/signature.ts`; the SDK example uses the SDK helper.
 
@@ -67,7 +78,7 @@ npm run rest -- --apply --assets
 npm run rest -- --apply --document=/absolute/path/factsheet.pdf
 ```
 
-`--assets` searches the asset catalog, creates Private Fund A under a unique external ID, selects CUSTOM pricing, sends USD 12.50, retries that exact price, corrects it to USD 13 with revision 2 at the same timestamp, and reads the price history. The fund is separate from the Apple portfolio, exactly as in the guide's optional asset examples. It does not demonstrate revaluing multiple portfolios or complete historical performance coverage.
+`--assets` checks an exact external reference, creates Private Fund A if absent, selects CUSTOM pricing, sends USD 12.50, retries that exact price, corrects it to USD 13 with revision 2 at the same timestamp, and reads the price history. This happens during discovery, before portfolio creation. Both snapshots include five units of the fund alongside Apple, exactly as in the guide's optional holdings flow. At the corrected USD 13 price, those five units are worth USD 65. It does not demonstrate revaluing multiple portfolios or complete historical performance coverage.
 
 `--document` also enables the asset steps. Supply a sandbox PDF of at most 20 MiB. The example creates an upload session, prints the document ID, sends raw bytes with the returned storage headers (without the Motif API key), finalizes and polls for completion. A timeout or failed document exits with an error. Use the printed receipt to inspect an unfinished document; restarting the walkthrough creates a new run and document.
 

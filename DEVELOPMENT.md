@@ -12,7 +12,7 @@ npm run rest
 npm run sdk
 ```
 
-The tests exercise signatures, organization boundaries, duplicate delivery, failed read recovery, production-host rejection and both complete request sequences against a local HTTP contract fixture. They do not verify a deployed API, market prices, worker execution or research publication. Run both implementations against the sandbox and retain their results before declaring the integration verified.
+The tests exercise signatures, organization boundaries, duplicate delivery, failed read recovery, production-host rejection and both mapping modes and complete request sequences against a local HTTP contract fixture. They do not verify a deployed API, market prices, worker execution or research publication. Run both implementations against the sandbox and retain their results before declaring the integration verified.
 
 ## Validate an unpublished SDK candidate
 

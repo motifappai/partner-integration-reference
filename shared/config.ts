@@ -5,11 +5,11 @@ export const guideUrl =
   'https://motif.gitbook.io/motif-docs/integrate-with-motif/partner-data-and-insights'
 export const steps = [
   'Subscribe and receive a webhook',
+  'Discover and map assets (optionally add custom instruments)',
   'Read market updates and asset insights',
   'Create a portfolio',
   'Update a portfolio',
   'Read portfolio insights',
-  'Supply your own assets, prices or documents (optional)',
   'Keep the integration running',
 ]
 
@@ -40,6 +40,7 @@ export function configure() {
       apply: { type: 'boolean', default: false },
       help: { type: 'boolean', default: false },
       assets: { type: 'boolean', default: false },
+      mapping: { type: 'string', default: 'local' },
       document: { type: 'string' },
       archive: { type: 'boolean', default: false },
       'listen-seconds': { type: 'string', default: '60' },
@@ -48,10 +49,12 @@ export function configure() {
   console.log(`Guide: ${guideUrl}\n${steps.join('\n')}`)
   if (!values.apply || values.help) {
     console.log(
-      'Preview only; no requests. --apply executes the guide. --assets adds the asset guide; --document=/path/factsheet.pdf adds its upload. --archive closes this run’s account. --listen-seconds=60 waits for publications (0–600).'
+      'Preview only; no requests. --apply executes the guide. --mapping=local keeps asset references locally; --mapping=motif stores them in Motif. --assets adds a custom holding and prices; --document=/path/factsheet.pdf adds its upload. --archive closes this run’s account. --listen-seconds=60 waits for publications (0–600).'
     )
     return
   }
+  if (!['local', 'motif'].includes(values.mapping))
+    throw new Error('Use --mapping=local or --mapping=motif')
   const baseURL = sandboxUrl(
     process.env.MOTIF_API_BASE_URL || 'https://staging.backend.motifapp.ai/api'
   )
@@ -92,13 +95,14 @@ export function configure() {
     listenSeconds,
     runId,
     externalId,
+    mapping: values.mapping,
     assets: values.assets || Boolean(values.document),
     document: values.document,
     archive: values.archive,
   }
 }
 
-export function snapshot(revision: 1 | 2) {
+export function snapshot(revision: 1 | 2, assetId: string, customAssetId?: string) {
   return {
     revision,
     asOf: new Date().toISOString(),
@@ -107,14 +111,21 @@ export function snapshot(revision: 1 | 2) {
     holdings: [
       {
         instrument: {
-          type: 'STOCK' as const,
-          symbol: 'AAPL',
-          exchange: 'NASDAQ',
-          name: 'Apple Inc.',
+          type: 'ASSET' as const,
+          assetId,
         },
         quantity: revision === 1 ? '10' : '12',
         currency: 'USD',
       },
+      ...(customAssetId
+        ? [
+            {
+              instrument: { type: 'ASSET' as const, assetId: customAssetId },
+              quantity: '5',
+              currency: 'USD',
+            },
+          ]
+        : []),
     ],
   }
 }

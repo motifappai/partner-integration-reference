@@ -91,18 +91,14 @@ async function main() {
     show('Subscription ID (secret held in memory)', subscriptionId)
     await testSubscription(subscriptionId)
 
-    console.log('\n2. Read market updates and asset insights')
-    show(
-      'Market update; null means not yet available',
-      await request('POST', '/v1/sdk/clarity/market-update', { language: 'en' })
-    )
+    console.log('\n2. Discover and map assets')
     let cursor: string | undefined
     let assetId: string | undefined
     do {
       const candidates = record(
         await request(
           'GET',
-          `/v1/sdk/assets?${new URLSearchParams({ query: 'AAPL', limit: '50', ...(cursor ? { cursor } : {}) })}`
+          `/v1/sdk/assets?${new URLSearchParams({ limit: '50', ...(cursor ? { cursor } : {}) })}`
         )
       )
       for (const candidate of array(candidates.assets)) {
@@ -117,6 +113,10 @@ async function main() {
               'More than one NASDAQ AAPL listing; resolve the instrument mapping before continuing'
             )
           assetId = text(asset.id)
+          if (config.mapping === 'motif' && asset.externalId != null)
+            throw new Error(
+              'This listing already has an external reference; preserve it and use --mapping=local'
+            )
           show('Selected Apple listing; verify name and exchange', asset)
         }
       }
@@ -126,76 +126,48 @@ async function main() {
       throw new Error(
         'No NASDAQ AAPL equity in the catalog; resolve the listing with Motif'
       )
-    show(
-      'Asset insight; null means not yet available',
-      await request(
-        'GET',
-        `/v1/sdk/clarity/assets/${encodeURIComponent(assetId)}?language=en`
+    const externalAssetId = `${config.runId}-security-apple`
+    if (config.mapping === 'motif') {
+      await request('PATCH', `/v1/sdk/assets/${encodeURIComponent(assetId)}`, {
+        externalId: externalAssetId,
+        currency: 'USD',
+      })
+      const mapped = record(
+        await request(
+          'GET',
+          `/v1/sdk/assets?${new URLSearchParams({ externalId: externalAssetId, limit: '1' })}`
+        )
       )
-    )
-
-    console.log('\n3. Create a portfolio')
-    const initialSnapshot = snapshot(1)
-    show('Initial complete snapshot', initialSnapshot)
-    const receipt = record(
-      await request(
-        'PUT',
-        `/v1/sdk/portfolios/${encodeURIComponent(config.externalId)}`,
-        initialSnapshot
-      )
-    )
-    portfolioId = text(receipt.portfolioId)
-    show('Store externalId → portfolioId', {
-      externalId: config.externalId,
-      ...receipt,
-    })
-    await waitForCalculation(
-      () =>
-        request('GET', `/v1/sdk/portfolios/${encodeURIComponent(config.externalId)}`),
-      1
-    )
-
-    console.log('\n4. Update a portfolio')
-    const updatedSnapshot = snapshot(2)
-    show('Replacement complete snapshot', updatedSnapshot)
-    await request(
-      'PUT',
-      `/v1/sdk/portfolios/${encodeURIComponent(config.externalId)}`,
-      updatedSnapshot
-    )
-    await request(
-      'PUT',
-      `/v1/sdk/portfolios/${encodeURIComponent(config.externalId)}`,
-      updatedSnapshot
-    )
-    await waitForCalculation(
-      () =>
-        request('GET', `/v1/sdk/portfolios/${encodeURIComponent(config.externalId)}`),
-      2
-    )
-
-    console.log('\n5. Read portfolio insights')
-    show(
-      'Portfolio insight; card/read may be null',
-      await request(
-        'GET',
-        `/v1/sdk/clarity/portfolios/${encodeURIComponent(portfolioId)}?language=en&window=1D`
-      )
-    )
-
+      const stored = record(array(mapped.assets)[0])
+      if (stored.id !== assetId) throw new Error('Asset mapping was not persisted')
+      show('Organization asset reference stored in Motif', stored)
+    } else {
+      show('Save this mapping in your own instrument database', {
+        externalId: externalAssetId,
+        assetId,
+      })
+    }
+    let customAssetId: string | undefined
     if (config.assets) {
-      console.log('\n6. Supply your own assets, prices or documents')
-      show('Asset search', await request('GET', '/v1/sdk/assets?query=BHP&limit=50'))
-      const customAsset = record(
-        await request('POST', '/v1/sdk/assets', {
-          externalId: `${config.runId}-private-fund-a`,
-          name: 'Private Fund A',
-          symbol: 'PFA',
-          currency: 'USD',
-          description: 'Partner supplied private fund units',
-        })
+      console.log('Create an unmatched custom instrument and supply prices')
+      const customExternalId = `${config.runId}-private-fund-a`
+      const existing = record(
+        await request(
+          'GET',
+          `/v1/sdk/assets?${new URLSearchParams({ externalId: customExternalId, limit: '1' })}`
+        )
       )
-      const customAssetId = text(customAsset.id)
+      const customAsset = record(
+        array(existing.assets)[0] ??
+          (await request('POST', '/v1/sdk/assets', {
+            externalId: customExternalId,
+            name: 'Private Fund A',
+            symbol: 'PFA',
+            currency: 'USD',
+            description: 'Partner supplied private fund units',
+          }))
+      )
+      customAssetId = text(customAsset.id)
       show(
         'Custom asset',
         await request('GET', `/v1/sdk/assets/${encodeURIComponent(customAssetId)}`)
@@ -261,10 +233,11 @@ async function main() {
           'POST',
           `/v1/sdk/assets/${encodeURIComponent(customAssetId)}/documents/${encodeURIComponent(documentId)}/finalize`
         )
+        const documentAssetId = customAssetId
         await waitForDocument(() =>
           request(
             'GET',
-            `/v1/sdk/assets/${encodeURIComponent(customAssetId)}/documents/${encodeURIComponent(documentId)}`
+            `/v1/sdk/assets/${encodeURIComponent(documentAssetId)}/documents/${encodeURIComponent(documentId)}`
           )
         )
       }
@@ -274,6 +247,68 @@ async function main() {
       console.log(
         'NOT EXERCISED: optional assets, prices and documents (use --assets / --document).'
       )
+
+    console.log('\n3. Read market updates and asset insights')
+    show(
+      'Market update; null means not yet available',
+      await request('POST', '/v1/sdk/clarity/market-update', { language: 'en' })
+    )
+    show(
+      'Asset insight; null means not yet available',
+      await request(
+        'GET',
+        `/v1/sdk/clarity/assets/${encodeURIComponent(assetId)}?language=en`
+      )
+    )
+
+    console.log('\n4. Create a portfolio')
+    const initialSnapshot = snapshot(1, assetId, customAssetId)
+    show('Initial complete snapshot', initialSnapshot)
+    const receipt = record(
+      await request(
+        'PUT',
+        `/v1/sdk/portfolios/${encodeURIComponent(config.externalId)}`,
+        initialSnapshot
+      )
+    )
+    portfolioId = text(receipt.portfolioId)
+    show('Store externalId → portfolioId', {
+      externalId: config.externalId,
+      ...receipt,
+    })
+    await waitForCalculation(
+      () =>
+        request('GET', `/v1/sdk/portfolios/${encodeURIComponent(config.externalId)}`),
+      1
+    )
+
+    console.log('\n5. Update a portfolio')
+    const updatedSnapshot = snapshot(2, assetId, customAssetId)
+    show('Replacement complete snapshot', updatedSnapshot)
+    await request(
+      'PUT',
+      `/v1/sdk/portfolios/${encodeURIComponent(config.externalId)}`,
+      updatedSnapshot
+    )
+    await request(
+      'PUT',
+      `/v1/sdk/portfolios/${encodeURIComponent(config.externalId)}`,
+      updatedSnapshot
+    )
+    await waitForCalculation(
+      () =>
+        request('GET', `/v1/sdk/portfolios/${encodeURIComponent(config.externalId)}`),
+      2
+    )
+
+    console.log('\n6. Read portfolio insights')
+    show(
+      'Portfolio insight; card/read may be null',
+      await request(
+        'GET',
+        `/v1/sdk/clarity/portfolios/${encodeURIComponent(portfolioId)}?language=en&window=1D`
+      )
+    )
 
     console.log('\n7. Keep the integration running')
     console.log(
