@@ -1,0 +1,8 @@
+{
+  "name": "motif-partner-sdk-reference",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@motif-ai/sdk": "0.2.0"
+  }
+}
