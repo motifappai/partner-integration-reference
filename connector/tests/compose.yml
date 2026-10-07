@@ -1,0 +1,28 @@
+name: motif-connector-test
+services:
+  partner:
+    image: rabbitmq:4.3-management
+    environment:
+      RABBITMQ_DEFAULT_USER: integration
+      RABBITMQ_DEFAULT_PASS: local-test-only
+    ports:
+      - '127.0.0.1:5673:5672'
+      - '127.0.0.1:15673:15672'
+    healthcheck:
+      test: ['CMD', 'rabbitmq-diagnostics', '-q', 'ping']
+      interval: 3s
+      timeout: 5s
+      retries: 30
+  motif:
+    image: rabbitmq:4.3-management
+    environment:
+      RABBITMQ_DEFAULT_USER: integration
+      RABBITMQ_DEFAULT_PASS: local-test-only
+    ports:
+      - '127.0.0.1:5674:5672'
+      - '127.0.0.1:15674:15672'
+    healthcheck:
+      test: ['CMD', 'rabbitmq-diagnostics', '-q', 'ping']
+      interval: 3s
+      timeout: 5s
+      retries: 30

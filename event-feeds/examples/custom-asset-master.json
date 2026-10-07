@@ -3,16 +3,17 @@
   "source": "urn:partner:security-master",
   "time": "2026-10-07T09:00:00Z",
   "datacontenttype": "application/json",
-  "id": "security-apple-master-1",
+  "id": "private-fund-master-1",
   "type": "ai.motif.asset.master.v1",
-  "subject": "security-apple-nasdaq",
+  "subject": "private-fund-a",
   "data": {
-    "externalId": "security-apple-nasdaq",
+    "externalId": "private-fund-a",
     "asOf": "2026-10-07T09:00:00Z",
     "revision": 1,
-    "action": "MAP_EXISTING",
-    "assetId": "VERIFIED_APPLE_ASSET_ID",
+    "action": "CREATE_CUSTOM",
+    "name": "Private Fund A",
+    "symbol": "PRIVATE-A",
     "currency": "USD",
-    "priceProvider": "MARKET"
+    "priceProvider": "CUSTOM"
   }
 }

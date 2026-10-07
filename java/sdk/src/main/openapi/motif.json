@@ -14,7 +14,9 @@
       "get": {
         "operationId": "sdk-assets-list",
         "summary": "Browse the asset universe or find an organization asset mapping",
-        "tags": ["sdk"],
+        "tags": [
+          "sdk"
+        ],
         "security": [
           {
             "apiKey": []
@@ -74,29 +76,52 @@
                           },
                           "category": {
                             "type": "string",
-                            "enum": ["EQUITY", "FUND", "CRYPTO_TOKEN", "CUSTOM"]
+                            "enum": [
+                              "EQUITY",
+                              "FUND",
+                              "CRYPTO_TOKEN",
+                              "CUSTOM"
+                            ]
                           },
                           "name": {
                             "type": "string"
                           },
                           "symbol": {
-                            "type": ["string", "null"]
+                            "type": [
+                              "string",
+                              "null"
+                            ]
                           },
                           "externalId": {
-                            "type": ["string", "null"]
+                            "type": [
+                              "string",
+                              "null"
+                            ]
                           },
                           "currency": {
-                            "type": ["string", "null"]
+                            "type": [
+                              "string",
+                              "null"
+                            ]
                           },
                           "priceProvider": {
                             "type": "string",
-                            "enum": ["MARKET", "CUSTOM"]
+                            "enum": [
+                              "MARKET",
+                              "CUSTOM"
+                            ]
                           },
                           "description": {
-                            "type": ["string", "null"]
+                            "type": [
+                              "string",
+                              "null"
+                            ]
                           },
                           "exchange": {
-                            "type": ["string", "null"]
+                            "type": [
+                              "string",
+                              "null"
+                            ]
                           }
                         },
                         "required": [
@@ -114,10 +139,16 @@
                       }
                     },
                     "nextCursor": {
-                      "type": ["string", "null"]
+                      "type": [
+                        "string",
+                        "null"
+                      ]
                     }
                   },
-                  "required": ["assets", "nextCursor"],
+                  "required": [
+                    "assets",
+                    "nextCursor"
+                  ],
                   "additionalProperties": false
                 }
               }
@@ -178,7 +209,9 @@
       "post": {
         "operationId": "sdk-assets-create",
         "summary": "Create a reusable custom asset with an idempotent external ID",
-        "tags": ["sdk"],
+        "tags": [
+          "sdk"
+        ],
         "security": [
           {
             "apiKey": []
@@ -216,7 +249,12 @@
                     "maxLength": 20000
                   }
                 },
-                "required": ["externalId", "name", "symbol", "currency"]
+                "required": [
+                  "externalId",
+                  "name",
+                  "symbol",
+                  "currency"
+                ]
               }
             }
           }
@@ -234,29 +272,52 @@
                     },
                     "category": {
                       "type": "string",
-                      "enum": ["EQUITY", "FUND", "CRYPTO_TOKEN", "CUSTOM"]
+                      "enum": [
+                        "EQUITY",
+                        "FUND",
+                        "CRYPTO_TOKEN",
+                        "CUSTOM"
+                      ]
                     },
                     "name": {
                       "type": "string"
                     },
                     "symbol": {
-                      "type": ["string", "null"]
+                      "type": [
+                        "string",
+                        "null"
+                      ]
                     },
                     "externalId": {
-                      "type": ["string", "null"]
+                      "type": [
+                        "string",
+                        "null"
+                      ]
                     },
                     "currency": {
-                      "type": ["string", "null"]
+                      "type": [
+                        "string",
+                        "null"
+                      ]
                     },
                     "priceProvider": {
                       "type": "string",
-                      "enum": ["MARKET", "CUSTOM"]
+                      "enum": [
+                        "MARKET",
+                        "CUSTOM"
+                      ]
                     },
                     "description": {
-                      "type": ["string", "null"]
+                      "type": [
+                        "string",
+                        "null"
+                      ]
                     },
                     "exchange": {
-                      "type": ["string", "null"]
+                      "type": [
+                        "string",
+                        "null"
+                      ]
                     }
                   },
                   "required": [
@@ -322,7 +383,9 @@
       "get": {
         "operationId": "sdk-assets-get",
         "summary": "Get an asset by its Motif ID",
-        "tags": ["sdk"],
+        "tags": [
+          "sdk"
+        ],
         "security": [
           {
             "apiKey": []
@@ -352,29 +415,52 @@
                     },
                     "category": {
                       "type": "string",
-                      "enum": ["EQUITY", "FUND", "CRYPTO_TOKEN", "CUSTOM"]
+                      "enum": [
+                        "EQUITY",
+                        "FUND",
+                        "CRYPTO_TOKEN",
+                        "CUSTOM"
+                      ]
                     },
                     "name": {
                       "type": "string"
                     },
                     "symbol": {
-                      "type": ["string", "null"]
+                      "type": [
+                        "string",
+                        "null"
+                      ]
                     },
                     "externalId": {
-                      "type": ["string", "null"]
+                      "type": [
+                        "string",
+                        "null"
+                      ]
                     },
                     "currency": {
-                      "type": ["string", "null"]
+                      "type": [
+                        "string",
+                        "null"
+                      ]
                     },
                     "priceProvider": {
                       "type": "string",
-                      "enum": ["MARKET", "CUSTOM"]
+                      "enum": [
+                        "MARKET",
+                        "CUSTOM"
+                      ]
                     },
                     "description": {
-                      "type": ["string", "null"]
+                      "type": [
+                        "string",
+                        "null"
+                      ]
                     },
                     "exchange": {
-                      "type": ["string", "null"]
+                      "type": [
+                        "string",
+                        "null"
+                      ]
                     }
                   },
                   "required": [
@@ -448,7 +534,9 @@
       "patch": {
         "operationId": "sdk-assets-update",
         "summary": "Set your asset reference, metadata or organization price provider",
-        "tags": ["sdk"],
+        "tags": [
+          "sdk"
+        ],
         "security": [
           {
             "apiKey": []
@@ -499,7 +587,10 @@
                   },
                   "priceProvider": {
                     "type": "string",
-                    "enum": ["MARKET", "CUSTOM"]
+                    "enum": [
+                      "MARKET",
+                      "CUSTOM"
+                    ]
                   }
                 }
               }
@@ -519,29 +610,52 @@
                     },
                     "category": {
                       "type": "string",
-                      "enum": ["EQUITY", "FUND", "CRYPTO_TOKEN", "CUSTOM"]
+                      "enum": [
+                        "EQUITY",
+                        "FUND",
+                        "CRYPTO_TOKEN",
+                        "CUSTOM"
+                      ]
                     },
                     "name": {
                       "type": "string"
                     },
                     "symbol": {
-                      "type": ["string", "null"]
+                      "type": [
+                        "string",
+                        "null"
+                      ]
                     },
                     "externalId": {
-                      "type": ["string", "null"]
+                      "type": [
+                        "string",
+                        "null"
+                      ]
                     },
                     "currency": {
-                      "type": ["string", "null"]
+                      "type": [
+                        "string",
+                        "null"
+                      ]
                     },
                     "priceProvider": {
                       "type": "string",
-                      "enum": ["MARKET", "CUSTOM"]
+                      "enum": [
+                        "MARKET",
+                        "CUSTOM"
+                      ]
                     },
                     "description": {
-                      "type": ["string", "null"]
+                      "type": [
+                        "string",
+                        "null"
+                      ]
                     },
                     "exchange": {
-                      "type": ["string", "null"]
+                      "type": [
+                        "string",
+                        "null"
+                      ]
                     }
                   },
                   "required": [
@@ -617,7 +731,9 @@
       "put": {
         "operationId": "sdk-assets-putPrice",
         "summary": "Write or correct a dated custom price and revalue affected accounts",
-        "tags": ["sdk"],
+        "tags": [
+          "sdk"
+        ],
         "security": [
           {
             "apiKey": []
@@ -660,7 +776,12 @@
                     "pattern": "^[A-Z]{3}$"
                   }
                 },
-                "required": ["asOf", "revision", "unitPrice", "currency"]
+                "required": [
+                  "asOf",
+                  "revision",
+                  "unitPrice",
+                  "currency"
+                ]
               }
             }
           }
@@ -686,7 +807,12 @@
                       "type": "string"
                     }
                   },
-                  "required": ["asOf", "revision", "unitPrice", "currency"],
+                  "required": [
+                    "asOf",
+                    "revision",
+                    "unitPrice",
+                    "currency"
+                  ],
                   "additionalProperties": false
                 }
               }
@@ -747,7 +873,9 @@
       "get": {
         "operationId": "sdk-assets-prices",
         "summary": "Read custom price history with exclusive time pagination",
-        "tags": ["sdk"],
+        "tags": [
+          "sdk"
+        ],
         "security": [
           {
             "apiKey": []
@@ -809,15 +937,26 @@
                             "type": "string"
                           }
                         },
-                        "required": ["asOf", "revision", "unitPrice", "currency"],
+                        "required": [
+                          "asOf",
+                          "revision",
+                          "unitPrice",
+                          "currency"
+                        ],
                         "additionalProperties": false
                       }
                     },
                     "nextBefore": {
-                      "type": ["string", "null"]
+                      "type": [
+                        "string",
+                        "null"
+                      ]
                     }
                   },
-                  "required": ["prices", "nextBefore"],
+                  "required": [
+                    "prices",
+                    "nextBefore"
+                  ],
                   "additionalProperties": false
                 }
               }
@@ -880,7 +1019,9 @@
       "post": {
         "operationId": "sdk-assets-createDocument",
         "summary": "Create a private fact-sheet upload session",
-        "tags": ["sdk"],
+        "tags": [
+          "sdk"
+        ],
         "security": [
           {
             "apiKey": []
@@ -936,7 +1077,11 @@
                     "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
                   }
                 },
-                "required": ["fileName", "mimeType", "sizeBytes"]
+                "required": [
+                  "fileName",
+                  "mimeType",
+                  "sizeBytes"
+                ]
               }
             }
           }
@@ -965,7 +1110,11 @@
                       }
                     }
                   },
-                  "required": ["documentId", "uploadUrl", "headers"],
+                  "required": [
+                    "documentId",
+                    "uploadUrl",
+                    "headers"
+                  ],
                   "additionalProperties": false
                 }
               }
@@ -1018,7 +1167,9 @@
       "post": {
         "operationId": "sdk-assets-finalizeDocument",
         "summary": "Seal the uploaded document and enqueue ingestion",
-        "tags": ["sdk"],
+        "tags": [
+          "sdk"
+        ],
         "security": [
           {
             "apiKey": []
@@ -1076,10 +1227,16 @@
                       ]
                     },
                     "error": {
-                      "type": ["string", "null"]
+                      "type": [
+                        "string",
+                        "null"
+                      ]
                     },
                     "jobId": {
-                      "type": ["string", "null"]
+                      "type": [
+                        "string",
+                        "null"
+                      ]
                     }
                   },
                   "required": [
@@ -1142,7 +1299,9 @@
       "get": {
         "operationId": "sdk-assets-document",
         "summary": "Read document ingestion status and asset association",
-        "tags": ["sdk"],
+        "tags": [
+          "sdk"
+        ],
         "security": [
           {
             "apiKey": []
@@ -1200,10 +1359,16 @@
                       ]
                     },
                     "error": {
-                      "type": ["string", "null"]
+                      "type": [
+                        "string",
+                        "null"
+                      ]
                     },
                     "jobId": {
-                      "type": ["string", "null"]
+                      "type": [
+                        "string",
+                        "null"
+                      ]
                     }
                   },
                   "required": [
@@ -1213,6 +1378,537 @@
                     "status",
                     "error",
                     "jobId"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error.BAD_REQUEST"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authorization not provided",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error.UNAUTHORIZED"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Insufficient access",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error.FORBIDDEN"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error.NOT_FOUND"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error.INTERNAL_SERVER_ERROR"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/sdk/feeds/receipts/{eventId}": {
+      "get": {
+        "operationId": "sdk-feeds-receipt",
+        "summary": "Read the durable outcome of a feed event",
+        "tags": [
+          "sdk"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "eventId",
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "source",
+            "schema": {
+              "type": "string",
+              "maxLength": 300,
+              "format": "uri"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "eventId": {
+                      "type": "string"
+                    },
+                    "source": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "APPLIED",
+                        "REJECTED"
+                      ]
+                    },
+                    "code": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "resourceId": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "processedAt": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "eventId",
+                    "source",
+                    "status",
+                    "code",
+                    "resourceId",
+                    "processedAt"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error.BAD_REQUEST"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authorization not provided",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error.UNAUTHORIZED"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Insufficient access",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error.FORBIDDEN"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error.NOT_FOUND"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error.INTERNAL_SERVER_ERROR"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/sdk/feeds/subscription": {
+      "get": {
+        "operationId": "sdk-feeds-subscription",
+        "summary": "Read broker insight notification subscription",
+        "tags": [
+          "sdk"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "enabled": {
+                      "type": "boolean"
+                    },
+                    "surfaces": {
+                      "minItems": 1,
+                      "maxItems": 3,
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "enum": [
+                          "MARKET",
+                          "ASSET",
+                          "PORTFOLIO"
+                        ]
+                      }
+                    },
+                    "language": {
+                      "default": "en",
+                      "type": "string",
+                      "pattern": "^[a-z]{2}(-[A-Z]{2})?$"
+                    }
+                  },
+                  "required": [
+                    "enabled",
+                    "surfaces",
+                    "language"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error.BAD_REQUEST"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authorization not provided",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error.UNAUTHORIZED"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Insufficient access",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error.FORBIDDEN"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error.NOT_FOUND"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error.INTERNAL_SERVER_ERROR"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "operationId": "sdk-feeds-configureSubscription",
+        "summary": "Configure broker insight notifications",
+        "tags": [
+          "sdk"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "enabled": {
+                    "type": "boolean"
+                  },
+                  "surfaces": {
+                    "minItems": 1,
+                    "maxItems": 3,
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "enum": [
+                        "MARKET",
+                        "ASSET",
+                        "PORTFOLIO"
+                      ]
+                    }
+                  },
+                  "language": {
+                    "default": "en",
+                    "type": "string",
+                    "pattern": "^[a-z]{2}(-[A-Z]{2})?$"
+                  }
+                },
+                "required": [
+                  "enabled",
+                  "surfaces"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "enabled": {
+                      "type": "boolean"
+                    },
+                    "surfaces": {
+                      "minItems": 1,
+                      "maxItems": 3,
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "enum": [
+                          "MARKET",
+                          "ASSET",
+                          "PORTFOLIO"
+                        ]
+                      }
+                    },
+                    "language": {
+                      "default": "en",
+                      "type": "string",
+                      "pattern": "^[a-z]{2}(-[A-Z]{2})?$"
+                    }
+                  },
+                  "required": [
+                    "enabled",
+                    "surfaces",
+                    "language"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error.BAD_REQUEST"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authorization not provided",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error.UNAUTHORIZED"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Insufficient access",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error.FORBIDDEN"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error.NOT_FOUND"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error.INTERNAL_SERVER_ERROR"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/sdk/feeds/fx": {
+      "get": {
+        "operationId": "sdk-feeds-fxRate",
+        "summary": "Read the latest partner FX observation at or before a time",
+        "tags": [
+          "sdk"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "baseCurrency",
+            "schema": {
+              "type": "string",
+              "pattern": "^[A-Z]{3}$"
+            },
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "quoteCurrency",
+            "schema": {
+              "type": "string",
+              "pattern": "^[A-Z]{3}$"
+            },
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "asOf",
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "baseCurrency": {
+                      "type": "string",
+                      "pattern": "^[A-Z]{3}$"
+                    },
+                    "quoteCurrency": {
+                      "type": "string",
+                      "pattern": "^[A-Z]{3}$"
+                    },
+                    "asOf": {
+                      "type": "string",
+                      "format": "date-time",
+                      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+                    },
+                    "revision": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 2147483647
+                    },
+                    "rate": {
+                      "type": "string",
+                      "pattern": "^\\d{1,16}(\\.\\d{1,12})?$"
+                    },
+                    "rateType": {
+                      "type": "string",
+                      "const": "MID"
+                    },
+                    "source": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "baseCurrency",
+                    "quoteCurrency",
+                    "asOf",
+                    "revision",
+                    "rate",
+                    "rateType",
+                    "source"
                   ],
                   "additionalProperties": false
                 }
@@ -1277,7 +1973,9 @@
         "operationId": "sdk-users-create",
         "summary": "Create user",
         "description": "Creates a new end user in the organization. SDK-created users are automatically email verified.",
-        "tags": ["sdk"],
+        "tags": [
+          "sdk"
+        ],
         "security": [
           {
             "apiKey": []
@@ -1305,7 +2003,10 @@
                     "maxLength": 255
                   }
                 },
-                "required": ["email", "name"]
+                "required": [
+                  "email",
+                  "name"
+                ]
               }
             }
           }
@@ -1337,7 +2038,10 @@
                       "type": "string"
                     },
                     "externalId": {
-                      "type": ["string", "null"]
+                      "type": [
+                        "string",
+                        "null"
+                      ]
                     }
                   },
                   "required": [
@@ -1400,7 +2104,9 @@
         "operationId": "sdk-users-list",
         "summary": "List users",
         "description": "Returns a paginated list of users in the organization. Use cursor for pagination.",
-        "tags": ["sdk"],
+        "tags": [
+          "sdk"
+        ],
         "security": [
           {
             "apiKey": []
@@ -1459,7 +2165,10 @@
                             "type": "string"
                           },
                           "externalId": {
-                            "type": ["string", "null"]
+                            "type": [
+                              "string",
+                              "null"
+                            ]
                           }
                         },
                         "required": [
@@ -1475,13 +2184,20 @@
                       }
                     },
                     "nextCursor": {
-                      "type": ["string", "null"]
+                      "type": [
+                        "string",
+                        "null"
+                      ]
                     },
                     "total": {
                       "type": "number"
                     }
                   },
-                  "required": ["users", "nextCursor", "total"],
+                  "required": [
+                    "users",
+                    "nextCursor",
+                    "total"
+                  ],
                   "additionalProperties": false
                 }
               }
@@ -1545,7 +2261,9 @@
         "operationId": "sdk-users-get",
         "summary": "Get user by ID",
         "description": "Returns a user by their internal Motif ID. User must belong to the organization.",
-        "tags": ["sdk"],
+        "tags": [
+          "sdk"
+        ],
         "security": [
           {
             "apiKey": []
@@ -1588,7 +2306,10 @@
                       "type": "string"
                     },
                     "externalId": {
-                      "type": ["string", "null"]
+                      "type": [
+                        "string",
+                        "null"
+                      ]
                     }
                   },
                   "required": [
@@ -1661,7 +2382,9 @@
         "operationId": "sdk-users-update",
         "summary": "Update user",
         "description": "Updates user details. User must belong to the organization.",
-        "tags": ["sdk"],
+        "tags": [
+          "sdk"
+        ],
         "security": [
           {
             "apiKey": []
@@ -1729,7 +2452,10 @@
                       "type": "string"
                     },
                     "externalId": {
-                      "type": ["string", "null"]
+                      "type": [
+                        "string",
+                        "null"
+                      ]
                     }
                   },
                   "required": [
@@ -1802,7 +2528,9 @@
         "operationId": "sdk-users-delete",
         "summary": "Delete user",
         "description": "Permanently deletes a user. User must belong to the organization. This action cannot be undone.",
-        "tags": ["sdk"],
+        "tags": [
+          "sdk"
+        ],
         "security": [
           {
             "apiKey": []
@@ -1830,7 +2558,9 @@
                       "type": "boolean"
                     }
                   },
-                  "required": ["success"],
+                  "required": [
+                    "success"
+                  ],
                   "additionalProperties": false
                 }
               }
@@ -1894,7 +2624,9 @@
         "operationId": "sdk-users-getByExternalId",
         "summary": "Get user by external ID",
         "description": "Returns a user by their partner-defined external ID. User must belong to the organization.",
-        "tags": ["sdk"],
+        "tags": [
+          "sdk"
+        ],
         "security": [
           {
             "apiKey": []
@@ -1937,7 +2669,10 @@
                       "type": "string"
                     },
                     "externalId": {
-                      "type": ["string", "null"]
+                      "type": [
+                        "string",
+                        "null"
+                      ]
                     }
                   },
                   "required": [
@@ -2011,7 +2746,9 @@
       "post": {
         "operationId": "sdk-webhooks-replay",
         "summary": "Replay an assessment notification with current access checks",
-        "tags": ["sdk"],
+        "tags": [
+          "sdk"
+        ],
         "security": [
           {
             "apiKey": []
@@ -2051,7 +2788,10 @@
                       "const": "QUEUED"
                     }
                   },
-                  "required": ["eventId", "status"],
+                  "required": [
+                    "eventId",
+                    "status"
+                  ],
                   "additionalProperties": false
                 }
               }
@@ -2104,7 +2844,9 @@
       "get": {
         "operationId": "sdk-webhooks-list",
         "summary": "List organization webhook subscriptions",
-        "tags": ["sdk"],
+        "tags": [
+          "sdk"
+        ],
         "security": [
           {
             "apiKey": []
@@ -2143,7 +2885,10 @@
                         "type": "boolean"
                       },
                       "description": {
-                        "type": ["string", "null"]
+                        "type": [
+                          "string",
+                          "null"
+                        ]
                       },
                       "createdAt": {
                         "type": "string"
@@ -2224,7 +2969,9 @@
       "post": {
         "operationId": "sdk-webhooks-create",
         "summary": "Subscribe to organization events",
-        "tags": ["sdk"],
+        "tags": [
+          "sdk"
+        ],
         "security": [
           {
             "apiKey": []
@@ -2259,7 +3006,11 @@
                     "maxLength": 500
                   }
                 },
-                "required": ["name", "url", "events"]
+                "required": [
+                  "name",
+                  "url",
+                  "events"
+                ]
               }
             }
           }
@@ -2294,7 +3045,10 @@
                       "type": "boolean"
                     },
                     "description": {
-                      "type": ["string", "null"]
+                      "type": [
+                        "string",
+                        "null"
+                      ]
                     },
                     "createdAt": {
                       "type": "string"
@@ -2370,7 +3124,9 @@
       "patch": {
         "operationId": "sdk-webhooks-update",
         "summary": "Update a webhook subscription",
-        "tags": ["sdk"],
+        "tags": [
+          "sdk"
+        ],
         "security": [
           {
             "apiKey": []
@@ -2458,7 +3214,10 @@
                       "type": "boolean"
                     },
                     "description": {
-                      "type": ["string", "null"]
+                      "type": [
+                        "string",
+                        "null"
+                      ]
                     },
                     "createdAt": {
                       "type": "string"
@@ -2538,7 +3297,9 @@
       "delete": {
         "operationId": "sdk-webhooks-delete",
         "summary": "Delete a webhook subscription",
-        "tags": ["sdk"],
+        "tags": [
+          "sdk"
+        ],
         "security": [
           {
             "apiKey": []
@@ -2566,7 +3327,9 @@
                       "type": "boolean"
                     }
                   },
-                  "required": ["success"],
+                  "required": [
+                    "success"
+                  ],
                   "additionalProperties": false
                 }
               }
@@ -2629,7 +3392,9 @@
       "post": {
         "operationId": "sdk-webhooks-rotateSecret",
         "summary": "Rotate webhook signing secret",
-        "tags": ["sdk"],
+        "tags": [
+          "sdk"
+        ],
         "security": [
           {
             "apiKey": []
@@ -2660,7 +3425,10 @@
                       "type": "string"
                     }
                   },
-                  "required": ["secret", "secretPrefix"],
+                  "required": [
+                    "secret",
+                    "secretPrefix"
+                  ],
                   "additionalProperties": false
                 }
               }
@@ -2713,7 +3481,9 @@
       "post": {
         "operationId": "sdk-webhooks-test",
         "summary": "Send a signed test webhook",
-        "tags": ["sdk"],
+        "tags": [
+          "sdk"
+        ],
         "security": [
           {
             "apiKey": []
@@ -2741,16 +3511,27 @@
                       "type": "boolean"
                     },
                     "statusCode": {
-                      "type": ["number", "null"]
+                      "type": [
+                        "number",
+                        "null"
+                      ]
                     },
                     "duration": {
                       "type": "number"
                     },
                     "error": {
-                      "type": ["string", "null"]
+                      "type": [
+                        "string",
+                        "null"
+                      ]
                     }
                   },
-                  "required": ["success", "statusCode", "duration", "error"],
+                  "required": [
+                    "success",
+                    "statusCode",
+                    "duration",
+                    "error"
+                  ],
                   "additionalProperties": false
                 }
               }
@@ -2803,7 +3584,9 @@
       "get": {
         "operationId": "sdk-webhooks-deliveries",
         "summary": "Inspect webhook delivery attempts",
-        "tags": ["sdk"],
+        "tags": [
+          "sdk"
+        ],
         "security": [
           {
             "apiKey": []
@@ -2856,16 +3639,25 @@
                             "type": "string"
                           },
                           "statusCode": {
-                            "type": ["number", "null"]
+                            "type": [
+                              "number",
+                              "null"
+                            ]
                           },
                           "success": {
                             "type": "boolean"
                           },
                           "duration": {
-                            "type": ["number", "null"]
+                            "type": [
+                              "number",
+                              "null"
+                            ]
                           },
                           "error": {
-                            "type": ["string", "null"]
+                            "type": [
+                              "string",
+                              "null"
+                            ]
                           },
                           "createdAt": {
                             "type": "string"
@@ -2884,10 +3676,16 @@
                       }
                     },
                     "nextCursor": {
-                      "type": ["string", "null"]
+                      "type": [
+                        "string",
+                        "null"
+                      ]
                     }
                   },
-                  "required": ["deliveries", "nextCursor"],
+                  "required": [
+                    "deliveries",
+                    "nextCursor"
+                  ],
                   "additionalProperties": false
                 }
               }
@@ -2951,7 +3749,9 @@
         "operationId": "sdk-profile-getQuestions",
         "summary": "Get profiling questions",
         "description": "Returns profiling questions for the specified type (Basic, Advanced, or MIFID). Requires x-user-id header.",
-        "tags": ["sdk"],
+        "tags": [
+          "sdk"
+        ],
         "security": [
           {
             "apiKey": []
@@ -2963,7 +3763,13 @@
             "name": "type",
             "schema": {
               "type": "string",
-              "enum": ["Basic", "Advanced", "MIFID", "Conviction", "Brokerage"]
+              "enum": [
+                "Basic",
+                "Advanced",
+                "MIFID",
+                "Conviction",
+                "Brokerage"
+              ]
             },
             "required": true
           }
@@ -3000,7 +3806,10 @@
                         "type": "string"
                       },
                       "fieldDescription": {
-                        "type": ["string", "null"]
+                        "type": [
+                          "string",
+                          "null"
+                        ]
                       },
                       "question": {
                         "type": "string"
@@ -3100,7 +3909,9 @@
         "operationId": "sdk-profile-saveAnswer",
         "summary": "Save profiling answer",
         "description": "Saves an answer to a profiling question for the target user. Requires x-user-id header.",
-        "tags": ["sdk"],
+        "tags": [
+          "sdk"
+        ],
         "security": [
           {
             "apiKey": []
@@ -3128,7 +3939,10 @@
                       {
                         "type": "array",
                         "items": {
-                          "type": ["string", "number"]
+                          "type": [
+                            "string",
+                            "number"
+                          ]
                         }
                       },
                       {
@@ -3137,7 +3951,10 @@
                           "type": "string"
                         },
                         "additionalProperties": {
-                          "type": ["string", "number"]
+                          "type": [
+                            "string",
+                            "number"
+                          ]
                         }
                       },
                       {
@@ -3152,7 +3969,10 @@
                     ]
                   }
                 },
-                "required": ["questionId", "answer"]
+                "required": [
+                  "questionId",
+                  "answer"
+                ]
               }
             }
           }
@@ -3169,7 +3989,9 @@
                       "type": "boolean"
                     }
                   },
-                  "required": ["success"],
+                  "required": [
+                    "success"
+                  ],
                   "additionalProperties": false
                 }
               }
@@ -3221,7 +4043,9 @@
         "operationId": "sdk-profile-getAnswers",
         "summary": "Get profiling answers",
         "description": "Returns all profiling answers for the target user. Requires x-user-id header.",
-        "tags": ["sdk"],
+        "tags": [
+          "sdk"
+        ],
         "security": [
           {
             "apiKey": []
@@ -3255,7 +4079,10 @@
                           {
                             "type": "array",
                             "items": {
-                              "type": ["string", "number"]
+                              "type": [
+                                "string",
+                                "number"
+                              ]
                             }
                           },
                           {
@@ -3264,7 +4091,10 @@
                               "type": "string"
                             },
                             "additionalProperties": {
-                              "type": ["string", "number"]
+                              "type": [
+                                "string",
+                                "number"
+                              ]
                             }
                           },
                           {
@@ -3289,7 +4119,12 @@
                         ]
                       }
                     },
-                    "required": ["questionId", "field", "value", "tier"],
+                    "required": [
+                      "questionId",
+                      "field",
+                      "value",
+                      "tier"
+                    ],
                     "additionalProperties": false
                   }
                 }
@@ -3354,7 +4189,9 @@
         "operationId": "sdk-profile-getInvestorProfile",
         "summary": "Get investor profile",
         "description": "Returns the computed investor profile (spider chart, strength level, summary). Requires x-user-id header.",
-        "tags": ["sdk"],
+        "tags": [
+          "sdk"
+        ],
         "security": [
           {
             "apiKey": []
@@ -3409,13 +4246,22 @@
                       ]
                     },
                     "strengthLevel": {
-                      "type": ["string", "null"]
+                      "type": [
+                        "string",
+                        "null"
+                      ]
                     },
                     "summary": {
-                      "type": ["string", "null"]
+                      "type": [
+                        "string",
+                        "null"
+                      ]
                     },
                     "lastComputed": {
-                      "type": ["string", "null"]
+                      "type": [
+                        "string",
+                        "null"
+                      ]
                     }
                   },
                   "required": [
@@ -3487,7 +4333,9 @@
         "operationId": "sdk-profile-computeInvestorProfile",
         "summary": "Compute investor profile",
         "description": "Computes or refreshes the investor profile based on profiling answers. Requires x-user-id header.",
-        "tags": ["sdk"],
+        "tags": [
+          "sdk"
+        ],
         "security": [
           {
             "apiKey": []
@@ -3553,13 +4401,22 @@
                       ]
                     },
                     "strengthLevel": {
-                      "type": ["string", "null"]
+                      "type": [
+                        "string",
+                        "null"
+                      ]
                     },
                     "summary": {
-                      "type": ["string", "null"]
+                      "type": [
+                        "string",
+                        "null"
+                      ]
                     },
                     "lastComputed": {
-                      "type": ["string", "null"]
+                      "type": [
+                        "string",
+                        "null"
+                      ]
                     }
                   },
                   "required": [
@@ -3621,7 +4478,9 @@
         "operationId": "sdk-profile-getCompletion",
         "summary": "Get profile completion status",
         "description": "Returns completion status for the specified profiling tier. Requires x-user-id header.",
-        "tags": ["sdk"],
+        "tags": [
+          "sdk"
+        ],
         "security": [
           {
             "apiKey": []
@@ -3633,7 +4492,13 @@
             "name": "tier",
             "schema": {
               "type": "string",
-              "enum": ["Basic", "Advanced", "MIFID", "Conviction", "Brokerage"]
+              "enum": [
+                "Basic",
+                "Advanced",
+                "MIFID",
+                "Conviction",
+                "Brokerage"
+              ]
             },
             "required": true
           }
@@ -3659,11 +4524,17 @@
                           "type": "number"
                         }
                       },
-                      "required": ["current", "total"],
+                      "required": [
+                        "current",
+                        "total"
+                      ],
                       "additionalProperties": false
                     }
                   },
-                  "required": ["isComplete", "progress"],
+                  "required": [
+                    "isComplete",
+                    "progress"
+                  ],
                   "additionalProperties": false
                 }
               }
@@ -3727,7 +4598,9 @@
         "operationId": "sdk-strategies-getRecommended",
         "summary": "Get recommended strategy",
         "description": "Returns the recommended investment strategy for the target user. If no strategy exists, one will be generated. Requires completed Basic profiling. Requires x-user-id header.",
-        "tags": ["sdk"],
+        "tags": [
+          "sdk"
+        ],
         "security": [
           {
             "apiKey": []
@@ -3751,10 +4624,16 @@
                               "type": "string"
                             },
                             "title": {
-                              "type": ["string", "null"]
+                              "type": [
+                                "string",
+                                "null"
+                              ]
                             },
                             "strategy": {
-                              "type": ["string", "null"]
+                              "type": [
+                                "string",
+                                "null"
+                              ]
                             },
                             "assumptions": {
                               "anyOf": [
@@ -3783,7 +4662,10 @@
                                         "type": "string"
                                       }
                                     },
-                                    "required": ["title", "description"],
+                                    "required": [
+                                      "title",
+                                      "description"
+                                    ],
                                     "additionalProperties": false
                                   }
                                 },
@@ -3806,10 +4688,16 @@
                               ]
                             },
                             "reasoning": {
-                              "type": ["string", "null"]
+                              "type": [
+                                "string",
+                                "null"
+                              ]
                             },
                             "score": {
-                              "type": ["number", "null"]
+                              "type": [
+                                "number",
+                                "null"
+                              ]
                             },
                             "state": {
                               "type": "string"
@@ -3829,13 +4717,20 @@
                                     "type": "number"
                                   },
                                   "name": {
-                                    "type": ["string", "null"]
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
                                   },
                                   "percentage": {
                                     "type": "number"
                                   }
                                 },
-                                "required": ["tokenId", "name", "percentage"],
+                                "required": [
+                                  "tokenId",
+                                  "name",
+                                  "percentage"
+                                ],
                                 "additionalProperties": false
                               }
                             }
@@ -3865,10 +4760,17 @@
                       "type": "boolean"
                     },
                     "message": {
-                      "type": ["string", "null"]
+                      "type": [
+                        "string",
+                        "null"
+                      ]
                     }
                   },
-                  "required": ["strategy", "profileComplete", "message"],
+                  "required": [
+                    "strategy",
+                    "profileComplete",
+                    "message"
+                  ],
                   "additionalProperties": false
                 }
               }
@@ -3932,7 +4834,9 @@
         "operationId": "sdk-strategies-generate",
         "summary": "Generate investment strategy",
         "description": "Generates a new personalized investment strategy using AI. Requires completed Basic profiling. This may take several seconds. Requires x-user-id header.",
-        "tags": ["sdk"],
+        "tags": [
+          "sdk"
+        ],
         "security": [
           {
             "apiKey": []
@@ -3967,10 +4871,16 @@
                               "type": "string"
                             },
                             "title": {
-                              "type": ["string", "null"]
+                              "type": [
+                                "string",
+                                "null"
+                              ]
                             },
                             "strategy": {
-                              "type": ["string", "null"]
+                              "type": [
+                                "string",
+                                "null"
+                              ]
                             },
                             "assumptions": {
                               "anyOf": [
@@ -3999,7 +4909,10 @@
                                         "type": "string"
                                       }
                                     },
-                                    "required": ["title", "description"],
+                                    "required": [
+                                      "title",
+                                      "description"
+                                    ],
                                     "additionalProperties": false
                                   }
                                 },
@@ -4022,10 +4935,16 @@
                               ]
                             },
                             "reasoning": {
-                              "type": ["string", "null"]
+                              "type": [
+                                "string",
+                                "null"
+                              ]
                             },
                             "score": {
-                              "type": ["number", "null"]
+                              "type": [
+                                "number",
+                                "null"
+                              ]
                             },
                             "state": {
                               "type": "string"
@@ -4045,13 +4964,20 @@
                                     "type": "number"
                                   },
                                   "name": {
-                                    "type": ["string", "null"]
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
                                   },
                                   "percentage": {
                                     "type": "number"
                                   }
                                 },
-                                "required": ["tokenId", "name", "percentage"],
+                                "required": [
+                                  "tokenId",
+                                  "name",
+                                  "percentage"
+                                ],
                                 "additionalProperties": false
                               }
                             }
@@ -4081,10 +5007,17 @@
                       "type": "boolean"
                     },
                     "message": {
-                      "type": ["string", "null"]
+                      "type": [
+                        "string",
+                        "null"
+                      ]
                     }
                   },
-                  "required": ["strategy", "profileComplete", "message"],
+                  "required": [
+                    "strategy",
+                    "profileComplete",
+                    "message"
+                  ],
                   "additionalProperties": false
                 }
               }
@@ -4138,7 +5071,9 @@
         "operationId": "sdk-questionnaires-create",
         "summary": "Create profiling questionnaire",
         "description": "Creates a new profiling questionnaire session with a unique shareable token and URL. Requires API key authentication.",
-        "tags": ["sdk"],
+        "tags": [
+          "sdk"
+        ],
         "security": [
           {
             "apiKey": []
@@ -4181,13 +5116,19 @@
                       "type": "string"
                     },
                     "name": {
-                      "type": ["string", "null"]
+                      "type": [
+                        "string",
+                        "null"
+                      ]
                     },
                     "isActive": {
                       "type": "boolean"
                     },
                     "expiresAt": {
-                      "type": ["string", "null"]
+                      "type": [
+                        "string",
+                        "null"
+                      ]
                     },
                     "createdAt": {
                       "type": "string"
@@ -4255,7 +5196,10 @@
         "operationId": "sdk-partnerPortfolios-create",
         "summary": "Create a partner portfolio",
         "description": "Persists a partner portfolio context for later reference by Clarity card/chat endpoints. externalId must be unique within the organization.",
-        "tags": ["sdk", "clarity"],
+        "tags": [
+          "sdk",
+          "clarity"
+        ],
         "security": [
           {
             "apiKey": []
@@ -4291,10 +5235,17 @@
                           "maxLength": 32
                         },
                         "quantity": {
-                          "type": ["number", "string"]
+                          "type": [
+                            "number",
+                            "string"
+                          ]
                         },
                         "costBasis": {
-                          "type": ["number", "string", "null"]
+                          "type": [
+                            "number",
+                            "string",
+                            "null"
+                          ]
                         },
                         "currency": {
                           "anyOf": [
@@ -4309,10 +5260,16 @@
                           ]
                         },
                         "asOf": {
-                          "type": ["string", "null"]
+                          "type": [
+                            "string",
+                            "null"
+                          ]
                         }
                       },
-                      "required": ["ticker", "quantity"]
+                      "required": [
+                        "ticker",
+                        "quantity"
+                      ]
                     }
                   },
                   "historicHoldings": {
@@ -4327,16 +5284,29 @@
                           "maxLength": 32
                         },
                         "quantity": {
-                          "type": ["number", "string"]
+                          "type": [
+                            "number",
+                            "string"
+                          ]
                         },
                         "openedAt": {
-                          "type": ["string", "null"]
+                          "type": [
+                            "string",
+                            "null"
+                          ]
                         },
                         "closedAt": {
-                          "type": ["string", "null"]
+                          "type": [
+                            "string",
+                            "null"
+                          ]
                         },
                         "realisedPnl": {
-                          "type": ["number", "string", "null"]
+                          "type": [
+                            "number",
+                            "string",
+                            "null"
+                          ]
                         },
                         "currency": {
                           "anyOf": [
@@ -4351,7 +5321,10 @@
                           ]
                         }
                       },
-                      "required": ["ticker", "quantity"]
+                      "required": [
+                        "ticker",
+                        "quantity"
+                      ]
                     }
                   },
                   "trades": {
@@ -4367,13 +5340,22 @@
                         },
                         "side": {
                           "type": "string",
-                          "enum": ["BUY", "SELL"]
+                          "enum": [
+                            "BUY",
+                            "SELL"
+                          ]
                         },
                         "quantity": {
-                          "type": ["number", "string"]
+                          "type": [
+                            "number",
+                            "string"
+                          ]
                         },
                         "price": {
-                          "type": ["number", "string"]
+                          "type": [
+                            "number",
+                            "string"
+                          ]
                         },
                         "executedAt": {
                           "type": "string"
@@ -4391,7 +5373,13 @@
                           ]
                         }
                       },
-                      "required": ["ticker", "side", "quantity", "price", "executedAt"]
+                      "required": [
+                        "ticker",
+                        "side",
+                        "quantity",
+                        "price",
+                        "executedAt"
+                      ]
                     }
                   },
                   "profile": {
@@ -4441,10 +5429,18 @@
                         ]
                       },
                       "annualIncome": {
-                        "type": ["number", "string", "null"]
+                        "type": [
+                          "number",
+                          "string",
+                          "null"
+                        ]
                       },
                       "netWorth": {
-                        "type": ["number", "string", "null"]
+                        "type": [
+                          "number",
+                          "string",
+                          "null"
+                        ]
                       },
                       "notes": {
                         "anyOf": [
@@ -4460,7 +5456,10 @@
                     }
                   }
                 },
-                "required": ["externalId", "currentHoldings"]
+                "required": [
+                  "externalId",
+                  "currentHoldings"
+                ]
               }
             }
           }
@@ -4493,10 +5492,17 @@
                             "maxLength": 32
                           },
                           "quantity": {
-                            "type": ["number", "string"]
+                            "type": [
+                              "number",
+                              "string"
+                            ]
                           },
                           "costBasis": {
-                            "type": ["number", "string", "null"]
+                            "type": [
+                              "number",
+                              "string",
+                              "null"
+                            ]
                           },
                           "currency": {
                             "anyOf": [
@@ -4511,10 +5517,16 @@
                             ]
                           },
                           "asOf": {
-                            "type": ["string", "null"]
+                            "type": [
+                              "string",
+                              "null"
+                            ]
                           }
                         },
-                        "required": ["ticker", "quantity"],
+                        "required": [
+                          "ticker",
+                          "quantity"
+                        ],
                         "additionalProperties": false
                       }
                     },
@@ -4531,16 +5543,29 @@
                                 "maxLength": 32
                               },
                               "quantity": {
-                                "type": ["number", "string"]
+                                "type": [
+                                  "number",
+                                  "string"
+                                ]
                               },
                               "openedAt": {
-                                "type": ["string", "null"]
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
                               },
                               "closedAt": {
-                                "type": ["string", "null"]
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
                               },
                               "realisedPnl": {
-                                "type": ["number", "string", "null"]
+                                "type": [
+                                  "number",
+                                  "string",
+                                  "null"
+                                ]
                               },
                               "currency": {
                                 "anyOf": [
@@ -4555,7 +5580,10 @@
                                 ]
                               }
                             },
-                            "required": ["ticker", "quantity"],
+                            "required": [
+                              "ticker",
+                              "quantity"
+                            ],
                             "additionalProperties": false
                           }
                         },
@@ -4578,13 +5606,22 @@
                               },
                               "side": {
                                 "type": "string",
-                                "enum": ["BUY", "SELL"]
+                                "enum": [
+                                  "BUY",
+                                  "SELL"
+                                ]
                               },
                               "quantity": {
-                                "type": ["number", "string"]
+                                "type": [
+                                  "number",
+                                  "string"
+                                ]
                               },
                               "price": {
-                                "type": ["number", "string"]
+                                "type": [
+                                  "number",
+                                  "string"
+                                ]
                               },
                               "executedAt": {
                                 "type": "string"
@@ -4666,10 +5703,18 @@
                               ]
                             },
                             "annualIncome": {
-                              "type": ["number", "string", "null"]
+                              "type": [
+                                "number",
+                                "string",
+                                "null"
+                              ]
                             },
                             "netWorth": {
-                              "type": ["number", "string", "null"]
+                              "type": [
+                                "number",
+                                "string",
+                                "null"
+                              ]
                             },
                             "notes": {
                               "anyOf": [
@@ -4760,7 +5805,10 @@
       "get": {
         "operationId": "sdk-partnerPortfolios-get",
         "summary": "Get a partner portfolio",
-        "tags": ["sdk", "clarity"],
+        "tags": [
+          "sdk",
+          "clarity"
+        ],
         "security": [
           {
             "apiKey": []
@@ -4804,10 +5852,17 @@
                             "maxLength": 32
                           },
                           "quantity": {
-                            "type": ["number", "string"]
+                            "type": [
+                              "number",
+                              "string"
+                            ]
                           },
                           "costBasis": {
-                            "type": ["number", "string", "null"]
+                            "type": [
+                              "number",
+                              "string",
+                              "null"
+                            ]
                           },
                           "currency": {
                             "anyOf": [
@@ -4822,10 +5877,16 @@
                             ]
                           },
                           "asOf": {
-                            "type": ["string", "null"]
+                            "type": [
+                              "string",
+                              "null"
+                            ]
                           }
                         },
-                        "required": ["ticker", "quantity"],
+                        "required": [
+                          "ticker",
+                          "quantity"
+                        ],
                         "additionalProperties": false
                       }
                     },
@@ -4842,16 +5903,29 @@
                                 "maxLength": 32
                               },
                               "quantity": {
-                                "type": ["number", "string"]
+                                "type": [
+                                  "number",
+                                  "string"
+                                ]
                               },
                               "openedAt": {
-                                "type": ["string", "null"]
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
                               },
                               "closedAt": {
-                                "type": ["string", "null"]
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
                               },
                               "realisedPnl": {
-                                "type": ["number", "string", "null"]
+                                "type": [
+                                  "number",
+                                  "string",
+                                  "null"
+                                ]
                               },
                               "currency": {
                                 "anyOf": [
@@ -4866,7 +5940,10 @@
                                 ]
                               }
                             },
-                            "required": ["ticker", "quantity"],
+                            "required": [
+                              "ticker",
+                              "quantity"
+                            ],
                             "additionalProperties": false
                           }
                         },
@@ -4889,13 +5966,22 @@
                               },
                               "side": {
                                 "type": "string",
-                                "enum": ["BUY", "SELL"]
+                                "enum": [
+                                  "BUY",
+                                  "SELL"
+                                ]
                               },
                               "quantity": {
-                                "type": ["number", "string"]
+                                "type": [
+                                  "number",
+                                  "string"
+                                ]
                               },
                               "price": {
-                                "type": ["number", "string"]
+                                "type": [
+                                  "number",
+                                  "string"
+                                ]
                               },
                               "executedAt": {
                                 "type": "string"
@@ -4977,10 +6063,18 @@
                               ]
                             },
                             "annualIncome": {
-                              "type": ["number", "string", "null"]
+                              "type": [
+                                "number",
+                                "string",
+                                "null"
+                              ]
                             },
                             "netWorth": {
-                              "type": ["number", "string", "null"]
+                              "type": [
+                                "number",
+                                "string",
+                                "null"
+                              ]
                             },
                             "notes": {
                               "anyOf": [
@@ -5079,7 +6173,10 @@
       "patch": {
         "operationId": "sdk-partnerPortfolios-update",
         "summary": "Update a partner portfolio",
-        "tags": ["sdk", "clarity"],
+        "tags": [
+          "sdk",
+          "clarity"
+        ],
         "security": [
           {
             "apiKey": []
@@ -5124,10 +6221,17 @@
                           "maxLength": 32
                         },
                         "quantity": {
-                          "type": ["number", "string"]
+                          "type": [
+                            "number",
+                            "string"
+                          ]
                         },
                         "costBasis": {
-                          "type": ["number", "string", "null"]
+                          "type": [
+                            "number",
+                            "string",
+                            "null"
+                          ]
                         },
                         "currency": {
                           "anyOf": [
@@ -5142,10 +6246,16 @@
                           ]
                         },
                         "asOf": {
-                          "type": ["string", "null"]
+                          "type": [
+                            "string",
+                            "null"
+                          ]
                         }
                       },
-                      "required": ["ticker", "quantity"]
+                      "required": [
+                        "ticker",
+                        "quantity"
+                      ]
                     }
                   },
                   "historicHoldings": {
@@ -5160,16 +6270,29 @@
                           "maxLength": 32
                         },
                         "quantity": {
-                          "type": ["number", "string"]
+                          "type": [
+                            "number",
+                            "string"
+                          ]
                         },
                         "openedAt": {
-                          "type": ["string", "null"]
+                          "type": [
+                            "string",
+                            "null"
+                          ]
                         },
                         "closedAt": {
-                          "type": ["string", "null"]
+                          "type": [
+                            "string",
+                            "null"
+                          ]
                         },
                         "realisedPnl": {
-                          "type": ["number", "string", "null"]
+                          "type": [
+                            "number",
+                            "string",
+                            "null"
+                          ]
                         },
                         "currency": {
                           "anyOf": [
@@ -5184,7 +6307,10 @@
                           ]
                         }
                       },
-                      "required": ["ticker", "quantity"]
+                      "required": [
+                        "ticker",
+                        "quantity"
+                      ]
                     }
                   },
                   "trades": {
@@ -5200,13 +6326,22 @@
                         },
                         "side": {
                           "type": "string",
-                          "enum": ["BUY", "SELL"]
+                          "enum": [
+                            "BUY",
+                            "SELL"
+                          ]
                         },
                         "quantity": {
-                          "type": ["number", "string"]
+                          "type": [
+                            "number",
+                            "string"
+                          ]
                         },
                         "price": {
-                          "type": ["number", "string"]
+                          "type": [
+                            "number",
+                            "string"
+                          ]
                         },
                         "executedAt": {
                           "type": "string"
@@ -5224,7 +6359,13 @@
                           ]
                         }
                       },
-                      "required": ["ticker", "side", "quantity", "price", "executedAt"]
+                      "required": [
+                        "ticker",
+                        "side",
+                        "quantity",
+                        "price",
+                        "executedAt"
+                      ]
                     }
                   },
                   "profile": {
@@ -5274,10 +6415,18 @@
                         ]
                       },
                       "annualIncome": {
-                        "type": ["number", "string", "null"]
+                        "type": [
+                          "number",
+                          "string",
+                          "null"
+                        ]
                       },
                       "netWorth": {
-                        "type": ["number", "string", "null"]
+                        "type": [
+                          "number",
+                          "string",
+                          "null"
+                        ]
                       },
                       "notes": {
                         "anyOf": [
@@ -5325,10 +6474,17 @@
                             "maxLength": 32
                           },
                           "quantity": {
-                            "type": ["number", "string"]
+                            "type": [
+                              "number",
+                              "string"
+                            ]
                           },
                           "costBasis": {
-                            "type": ["number", "string", "null"]
+                            "type": [
+                              "number",
+                              "string",
+                              "null"
+                            ]
                           },
                           "currency": {
                             "anyOf": [
@@ -5343,10 +6499,16 @@
                             ]
                           },
                           "asOf": {
-                            "type": ["string", "null"]
+                            "type": [
+                              "string",
+                              "null"
+                            ]
                           }
                         },
-                        "required": ["ticker", "quantity"],
+                        "required": [
+                          "ticker",
+                          "quantity"
+                        ],
                         "additionalProperties": false
                       }
                     },
@@ -5363,16 +6525,29 @@
                                 "maxLength": 32
                               },
                               "quantity": {
-                                "type": ["number", "string"]
+                                "type": [
+                                  "number",
+                                  "string"
+                                ]
                               },
                               "openedAt": {
-                                "type": ["string", "null"]
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
                               },
                               "closedAt": {
-                                "type": ["string", "null"]
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
                               },
                               "realisedPnl": {
-                                "type": ["number", "string", "null"]
+                                "type": [
+                                  "number",
+                                  "string",
+                                  "null"
+                                ]
                               },
                               "currency": {
                                 "anyOf": [
@@ -5387,7 +6562,10 @@
                                 ]
                               }
                             },
-                            "required": ["ticker", "quantity"],
+                            "required": [
+                              "ticker",
+                              "quantity"
+                            ],
                             "additionalProperties": false
                           }
                         },
@@ -5410,13 +6588,22 @@
                               },
                               "side": {
                                 "type": "string",
-                                "enum": ["BUY", "SELL"]
+                                "enum": [
+                                  "BUY",
+                                  "SELL"
+                                ]
                               },
                               "quantity": {
-                                "type": ["number", "string"]
+                                "type": [
+                                  "number",
+                                  "string"
+                                ]
                               },
                               "price": {
-                                "type": ["number", "string"]
+                                "type": [
+                                  "number",
+                                  "string"
+                                ]
                               },
                               "executedAt": {
                                 "type": "string"
@@ -5498,10 +6685,18 @@
                               ]
                             },
                             "annualIncome": {
-                              "type": ["number", "string", "null"]
+                              "type": [
+                                "number",
+                                "string",
+                                "null"
+                              ]
                             },
                             "netWorth": {
-                              "type": ["number", "string", "null"]
+                              "type": [
+                                "number",
+                                "string",
+                                "null"
+                              ]
                             },
                             "notes": {
                               "anyOf": [
@@ -5600,7 +6795,10 @@
       "delete": {
         "operationId": "sdk-partnerPortfolios-delete",
         "summary": "Delete a partner portfolio",
-        "tags": ["sdk", "clarity"],
+        "tags": [
+          "sdk",
+          "clarity"
+        ],
         "security": [
           {
             "apiKey": []
@@ -5628,7 +6826,9 @@
                       "type": "boolean"
                     }
                   },
-                  "required": ["success"],
+                  "required": [
+                    "success"
+                  ],
                   "additionalProperties": false
                 }
               }
@@ -5692,7 +6892,10 @@
         "operationId": "sdk-partnerPortfolios-recordTrades",
         "summary": "Record new trades on an existing partner portfolio",
         "description": "Appends one or more new trades to the partner portfolio and replaces currentHoldings with the supplied post-trade snapshot. Server retains at most the most recent 5000 trades (oldest dropped by executedAt). To update historicHoldings (e.g. after a position closes), use PATCH /v1/sdk/partner-portfolios/{id}.",
-        "tags": ["sdk", "clarity"],
+        "tags": [
+          "sdk",
+          "clarity"
+        ],
         "security": [
           {
             "apiKey": []
@@ -5729,13 +6932,22 @@
                         },
                         "side": {
                           "type": "string",
-                          "enum": ["BUY", "SELL"]
+                          "enum": [
+                            "BUY",
+                            "SELL"
+                          ]
                         },
                         "quantity": {
-                          "type": ["number", "string"]
+                          "type": [
+                            "number",
+                            "string"
+                          ]
                         },
                         "price": {
-                          "type": ["number", "string"]
+                          "type": [
+                            "number",
+                            "string"
+                          ]
                         },
                         "executedAt": {
                           "type": "string"
@@ -5753,7 +6965,13 @@
                           ]
                         }
                       },
-                      "required": ["ticker", "side", "quantity", "price", "executedAt"]
+                      "required": [
+                        "ticker",
+                        "side",
+                        "quantity",
+                        "price",
+                        "executedAt"
+                      ]
                     }
                   },
                   "currentHoldings": {
@@ -5768,10 +6986,17 @@
                           "maxLength": 32
                         },
                         "quantity": {
-                          "type": ["number", "string"]
+                          "type": [
+                            "number",
+                            "string"
+                          ]
                         },
                         "costBasis": {
-                          "type": ["number", "string", "null"]
+                          "type": [
+                            "number",
+                            "string",
+                            "null"
+                          ]
                         },
                         "currency": {
                           "anyOf": [
@@ -5786,14 +7011,23 @@
                           ]
                         },
                         "asOf": {
-                          "type": ["string", "null"]
+                          "type": [
+                            "string",
+                            "null"
+                          ]
                         }
                       },
-                      "required": ["ticker", "quantity"]
+                      "required": [
+                        "ticker",
+                        "quantity"
+                      ]
                     }
                   }
                 },
-                "required": ["trades", "currentHoldings"]
+                "required": [
+                  "trades",
+                  "currentHoldings"
+                ]
               }
             }
           }
@@ -5826,10 +7060,17 @@
                             "maxLength": 32
                           },
                           "quantity": {
-                            "type": ["number", "string"]
+                            "type": [
+                              "number",
+                              "string"
+                            ]
                           },
                           "costBasis": {
-                            "type": ["number", "string", "null"]
+                            "type": [
+                              "number",
+                              "string",
+                              "null"
+                            ]
                           },
                           "currency": {
                             "anyOf": [
@@ -5844,10 +7085,16 @@
                             ]
                           },
                           "asOf": {
-                            "type": ["string", "null"]
+                            "type": [
+                              "string",
+                              "null"
+                            ]
                           }
                         },
-                        "required": ["ticker", "quantity"],
+                        "required": [
+                          "ticker",
+                          "quantity"
+                        ],
                         "additionalProperties": false
                       }
                     },
@@ -5864,16 +7111,29 @@
                                 "maxLength": 32
                               },
                               "quantity": {
-                                "type": ["number", "string"]
+                                "type": [
+                                  "number",
+                                  "string"
+                                ]
                               },
                               "openedAt": {
-                                "type": ["string", "null"]
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
                               },
                               "closedAt": {
-                                "type": ["string", "null"]
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
                               },
                               "realisedPnl": {
-                                "type": ["number", "string", "null"]
+                                "type": [
+                                  "number",
+                                  "string",
+                                  "null"
+                                ]
                               },
                               "currency": {
                                 "anyOf": [
@@ -5888,7 +7148,10 @@
                                 ]
                               }
                             },
-                            "required": ["ticker", "quantity"],
+                            "required": [
+                              "ticker",
+                              "quantity"
+                            ],
                             "additionalProperties": false
                           }
                         },
@@ -5911,13 +7174,22 @@
                               },
                               "side": {
                                 "type": "string",
-                                "enum": ["BUY", "SELL"]
+                                "enum": [
+                                  "BUY",
+                                  "SELL"
+                                ]
                               },
                               "quantity": {
-                                "type": ["number", "string"]
+                                "type": [
+                                  "number",
+                                  "string"
+                                ]
                               },
                               "price": {
-                                "type": ["number", "string"]
+                                "type": [
+                                  "number",
+                                  "string"
+                                ]
                               },
                               "executedAt": {
                                 "type": "string"
@@ -5999,10 +7271,18 @@
                               ]
                             },
                             "annualIncome": {
-                              "type": ["number", "string", "null"]
+                              "type": [
+                                "number",
+                                "string",
+                                "null"
+                              ]
                             },
                             "netWorth": {
-                              "type": ["number", "string", "null"]
+                              "type": [
+                                "number",
+                                "string",
+                                "null"
+                              ]
                             },
                             "notes": {
                               "anyOf": [
@@ -6093,7 +7373,9 @@
       "post": {
         "operationId": "sdk-portfolios-archive",
         "summary": "Archive a partner account and stop its insight eligibility",
-        "tags": ["sdk"],
+        "tags": [
+          "sdk"
+        ],
         "security": [
           {
             "apiKey": []
@@ -6122,17 +7404,29 @@
                       "type": "string"
                     },
                     "externalId": {
-                      "type": ["string", "null"]
+                      "type": [
+                        "string",
+                        "null"
+                      ]
                     },
                     "status": {
                       "type": "string",
-                      "enum": ["PENDING_INVITE", "ACTIVE", "ARCHIVED"]
+                      "enum": [
+                        "PENDING_INVITE",
+                        "ACTIVE",
+                        "ARCHIVED"
+                      ]
                     },
                     "currency": {
                       "type": "string"
                     }
                   },
-                  "required": ["id", "externalId", "status", "currency"],
+                  "required": [
+                    "id",
+                    "externalId",
+                    "status",
+                    "currency"
+                  ],
                   "additionalProperties": false
                 }
               }
@@ -6185,7 +7479,10 @@
       "get": {
         "operationId": "sdk-portfolios-list",
         "summary": "List portfolios provisioned by this organization through the snapshot feed",
-        "tags": ["sdk", "portfolios"],
+        "tags": [
+          "sdk",
+          "portfolios"
+        ],
         "security": [
           {
             "apiKey": []
@@ -6227,25 +7524,43 @@
                             "type": "string"
                           },
                           "externalId": {
-                            "type": ["string", "null"]
+                            "type": [
+                              "string",
+                              "null"
+                            ]
                           },
                           "status": {
                             "type": "string",
-                            "enum": ["PENDING_INVITE", "ACTIVE", "ARCHIVED"]
+                            "enum": [
+                              "PENDING_INVITE",
+                              "ACTIVE",
+                              "ARCHIVED"
+                            ]
                           },
                           "currency": {
                             "type": "string"
                           }
                         },
-                        "required": ["id", "externalId", "status", "currency"],
+                        "required": [
+                          "id",
+                          "externalId",
+                          "status",
+                          "currency"
+                        ],
                         "additionalProperties": false
                       }
                     },
                     "nextCursor": {
-                      "type": ["string", "null"]
+                      "type": [
+                        "string",
+                        "null"
+                      ]
                     }
                   },
-                  "required": ["portfolios", "nextCursor"],
+                  "required": [
+                    "portfolios",
+                    "nextCursor"
+                  ],
                   "additionalProperties": false
                 }
               }
@@ -6309,7 +7624,10 @@
         "operationId": "sdk-portfolios-put",
         "summary": "Create or replace a native portfolio snapshot",
         "description": "Creates the portfolio and its internal client record on the first request. No separate client call or client ID is required. Atomically replaces the complete holdings and cash for this organization and external ID. Revisions must increase; identical retries are idempotent. Omitted holdings are removed. Triggers native valuation, price-history backfill and portfolio calculations. Does not execute trades.",
-        "tags": ["sdk", "portfolios"],
+        "tags": [
+          "sdk",
+          "portfolios"
+        ],
         "security": [
           {
             "apiKey": []
@@ -6372,7 +7690,10 @@
                                   "minLength": 1
                                 }
                               },
-                              "required": ["type", "assetId"],
+                              "required": [
+                                "type",
+                                "assetId"
+                              ],
                               "additionalProperties": false
                             },
                             {
@@ -6380,7 +7701,11 @@
                               "properties": {
                                 "type": {
                                   "type": "string",
-                                  "enum": ["STOCK", "ETF", "FUND"]
+                                  "enum": [
+                                    "STOCK",
+                                    "ETF",
+                                    "FUND"
+                                  ]
                                 },
                                 "symbol": {
                                   "type": "string",
@@ -6400,7 +7725,11 @@
                                   "maxLength": 200
                                 }
                               },
-                              "required": ["type", "symbol", "name"],
+                              "required": [
+                                "type",
+                                "symbol",
+                                "name"
+                              ],
                               "additionalProperties": false
                             },
                             {
@@ -6488,7 +7817,10 @@
                                   "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
                                 }
                               },
-                              "required": ["unitPrice", "asOf"],
+                              "required": [
+                                "unitPrice",
+                                "asOf"
+                              ],
                               "additionalProperties": false
                             },
                             {
@@ -6497,12 +7829,22 @@
                           ]
                         }
                       },
-                      "required": ["instrument", "quantity", "currency"],
+                      "required": [
+                        "instrument",
+                        "quantity",
+                        "currency"
+                      ],
                       "additionalProperties": false
                     }
                   }
                 },
-                "required": ["revision", "asOf", "currency", "cash", "holdings"],
+                "required": [
+                  "revision",
+                  "asOf",
+                  "currency",
+                  "cash",
+                  "holdings"
+                ],
                 "additionalProperties": false
               }
             }
@@ -6530,13 +7872,22 @@
                     },
                     "calculation": {
                       "type": "string",
-                      "enum": ["PENDING", "CURRENT"]
+                      "enum": [
+                        "PENDING",
+                        "CURRENT"
+                      ]
                     },
                     "calculatedRevision": {
-                      "type": ["number", "null"]
+                      "type": [
+                        "number",
+                        "null"
+                      ]
                     },
                     "calculatedAt": {
-                      "type": ["string", "null"]
+                      "type": [
+                        "string",
+                        "null"
+                      ]
                     }
                   },
                   "required": [
@@ -6608,7 +7959,10 @@
       "get": {
         "operationId": "sdk-portfolios-get",
         "summary": "Read a native portfolio and its calculation status",
-        "tags": ["sdk", "portfolios"],
+        "tags": [
+          "sdk",
+          "portfolios"
+        ],
         "security": [
           {
             "apiKey": []
@@ -6648,13 +8002,22 @@
                     },
                     "calculation": {
                       "type": "string",
-                      "enum": ["PENDING", "CURRENT"]
+                      "enum": [
+                        "PENDING",
+                        "CURRENT"
+                      ]
                     },
                     "calculatedRevision": {
-                      "type": ["number", "null"]
+                      "type": [
+                        "number",
+                        "null"
+                      ]
                     },
                     "calculatedAt": {
-                      "type": ["string", "null"]
+                      "type": [
+                        "string",
+                        "null"
+                      ]
                     },
                     "status": {
                       "type": "string"
@@ -6680,28 +8043,46 @@
                             "type": "string"
                           },
                           "symbol": {
-                            "type": ["string", "null"]
+                            "type": [
+                              "string",
+                              "null"
+                            ]
                           },
                           "quantity": {
                             "type": "string"
                           },
                           "costBasisPerUnit": {
-                            "type": ["string", "null"]
+                            "type": [
+                              "string",
+                              "null"
+                            ]
                           },
                           "value": {
-                            "type": ["string", "null"]
+                            "type": [
+                              "string",
+                              "null"
+                            ]
                           },
                           "missingPrice": {
                             "type": "boolean"
                           },
                           "unitPrice": {
-                            "type": ["string", "null"]
+                            "type": [
+                              "string",
+                              "null"
+                            ]
                           },
                           "priceSource": {
-                            "type": ["string", "null"]
+                            "type": [
+                              "string",
+                              "null"
+                            ]
                           },
                           "priceAsOf": {
-                            "type": ["string", "null"]
+                            "type": [
+                              "string",
+                              "null"
+                            ]
                           }
                         },
                         "required": [
@@ -6796,7 +8177,9 @@
       "get": {
         "operationId": "sdk-clarity-assetById",
         "summary": "Read the insight for an exact asset subject",
-        "tags": ["sdk"],
+        "tags": [
+          "sdk"
+        ],
         "security": [
           {
             "apiKey": []
@@ -6834,7 +8217,10 @@
                           "type": "string"
                         },
                         "headline": {
-                          "type": ["string", "null"]
+                          "type": [
+                            "string",
+                            "null"
+                          ]
                         },
                         "isFresh": {
                           "type": "boolean"
@@ -6851,22 +8237,37 @@
                             "type": "object",
                             "properties": {
                               "description": {
-                                "type": ["string", "null"]
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
                               },
                               "imageUrl": {
-                                "type": ["string", "null"]
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
                               },
                               "pubDate": {
-                                "type": ["string", "null"]
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
                               },
                               "sourceDomain": {
-                                "type": ["string", "null"]
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
                               },
                               "title": {
                                 "type": "string"
                               },
                               "url": {
-                                "type": ["string", "null"]
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
                               }
                             },
                             "required": [
@@ -6884,10 +8285,16 @@
                           "type": "number"
                         },
                         "symbol": {
-                          "type": ["string", "null"]
+                          "type": [
+                            "string",
+                            "null"
+                          ]
                         },
                         "text": {
-                          "type": ["string", "null"]
+                          "type": [
+                            "string",
+                            "null"
+                          ]
                         }
                       },
                       "required": [
@@ -6968,7 +8375,9 @@
       "get": {
         "operationId": "sdk-clarity-portfolioById",
         "summary": "Read the insight for an exact portfolio subject",
-        "tags": ["sdk"],
+        "tags": [
+          "sdk"
+        ],
         "security": [
           {
             "apiKey": []
@@ -6996,7 +8405,13 @@
             "name": "window",
             "schema": {
               "type": "string",
-              "enum": ["1D", "1W", "1M", "YTD", "1Y"]
+              "enum": [
+                "1D",
+                "1W",
+                "1M",
+                "YTD",
+                "1Y"
+              ]
             }
           }
         ],
@@ -7039,7 +8454,10 @@
                                           "type": "string"
                                         }
                                       },
-                                      "required": ["entityName", "label"],
+                                      "required": [
+                                        "entityName",
+                                        "label"
+                                      ],
                                       "additionalProperties": false
                                     }
                                   },
@@ -7049,7 +8467,10 @@
                                       "type": "object",
                                       "properties": {
                                         "asOf": {
-                                          "type": ["string", "null"]
+                                          "type": [
+                                            "string",
+                                            "null"
+                                          ]
                                         },
                                         "currency": {
                                           "type": "string"
@@ -7065,7 +8486,10 @@
                                           "type": "string"
                                         },
                                         "value": {
-                                          "type": ["number", "string"]
+                                          "type": [
+                                            "number",
+                                            "string"
+                                          ]
                                         },
                                         "valueType": {
                                           "type": "string",
@@ -7093,7 +8517,10 @@
                                   },
                                   "kind": {
                                     "type": "string",
-                                    "enum": ["commentary", "holding-insight"]
+                                    "enum": [
+                                      "commentary",
+                                      "holding-insight"
+                                    ]
                                   },
                                   "label": {
                                     "type": "string"
@@ -7126,7 +8553,10 @@
                                 "type": "object",
                                 "properties": {
                                   "asOf": {
-                                    "type": ["string", "null"]
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
                                   },
                                   "currency": {
                                     "type": "string"
@@ -7142,7 +8572,10 @@
                                     "type": "string"
                                   },
                                   "value": {
-                                    "type": ["number", "string"]
+                                    "type": [
+                                      "number",
+                                      "string"
+                                    ]
                                   },
                                   "valueType": {
                                     "type": "string",
@@ -7170,7 +8603,11 @@
                             },
                             "kind": {
                               "type": "string",
-                              "enum": ["ASSET", "MARKET", "PORTFOLIO"]
+                              "enum": [
+                                "ASSET",
+                                "MARKET",
+                                "PORTFOLIO"
+                              ]
                             },
                             "language": {
                               "type": "string"
@@ -7187,7 +8624,10 @@
                                     "type": "string"
                                   },
                                   "asOf": {
-                                    "type": ["string", "null"]
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
                                   },
                                   "kind": {
                                     "type": "string",
@@ -7221,7 +8661,13 @@
                             },
                             "window": {
                               "type": "string",
-                              "enum": ["1D", "1W", "1M", "YTD", "1Y"]
+                              "enum": [
+                                "1D",
+                                "1W",
+                                "1M",
+                                "YTD",
+                                "1Y"
+                              ]
                             }
                           },
                           "required": [
@@ -7264,17 +8710,28 @@
                                 "type": "object",
                                 "properties": {
                                   "dueBy": {
-                                    "type": ["string", "null"]
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
                                   },
                                   "effect": {
                                     "type": "string",
-                                    "enum": ["improves", "weakens", "either"]
+                                    "enum": [
+                                      "improves",
+                                      "weakens",
+                                      "either"
+                                    ]
                                   },
                                   "test": {
                                     "type": "string"
                                   }
                                 },
-                                "required": ["dueBy", "effect", "test"],
+                                "required": [
+                                  "dueBy",
+                                  "effect",
+                                  "test"
+                                ],
                                 "additionalProperties": false
                               }
                             },
@@ -7299,7 +8756,9 @@
                                     "type": "string"
                                   }
                                 },
-                                "required": ["id"],
+                                "required": [
+                                  "id"
+                                ],
                                 "additionalProperties": false
                               }
                             },
@@ -7323,7 +8782,10 @@
                       ]
                     }
                   },
-                  "required": ["card", "read"],
+                  "required": [
+                    "card",
+                    "read"
+                  ],
                   "additionalProperties": false
                 }
               }
@@ -7387,7 +8849,10 @@
         "operationId": "sdk-clarity-createEmbed",
         "summary": "Create a Clarity iframe embed",
         "description": "Mints a ready-to-use iframe URL for the Clarity card + chat surface. The URL embeds a short-lived signed token that scopes the iframe to one portfolio (by id or inline payload) and the listed parent origins. Drop the returned `url` into an iframe; the `token` is exposed for advanced use (e.g. SSR or non-iframe contexts).",
-        "tags": ["sdk", "clarity"],
+        "tags": [
+          "sdk",
+          "clarity"
+        ],
         "security": [
           {
             "apiKey": []
@@ -7424,10 +8889,17 @@
                               "maxLength": 32
                             },
                             "quantity": {
-                              "type": ["number", "string"]
+                              "type": [
+                                "number",
+                                "string"
+                              ]
                             },
                             "costBasis": {
-                              "type": ["number", "string", "null"]
+                              "type": [
+                                "number",
+                                "string",
+                                "null"
+                              ]
                             },
                             "currency": {
                               "anyOf": [
@@ -7454,7 +8926,10 @@
                               ]
                             }
                           },
-                          "required": ["ticker", "quantity"]
+                          "required": [
+                            "ticker",
+                            "quantity"
+                          ]
                         }
                       },
                       "historicHoldings": {
@@ -7469,7 +8944,10 @@
                               "maxLength": 32
                             },
                             "quantity": {
-                              "type": ["number", "string"]
+                              "type": [
+                                "number",
+                                "string"
+                              ]
                             },
                             "openedAt": {
                               "anyOf": [
@@ -7496,7 +8974,11 @@
                               ]
                             },
                             "realisedPnl": {
-                              "type": ["number", "string", "null"]
+                              "type": [
+                                "number",
+                                "string",
+                                "null"
+                              ]
                             },
                             "currency": {
                               "anyOf": [
@@ -7511,7 +8993,10 @@
                               ]
                             }
                           },
-                          "required": ["ticker", "quantity"]
+                          "required": [
+                            "ticker",
+                            "quantity"
+                          ]
                         }
                       },
                       "trades": {
@@ -7527,13 +9012,22 @@
                             },
                             "side": {
                               "type": "string",
-                              "enum": ["BUY", "SELL"]
+                              "enum": [
+                                "BUY",
+                                "SELL"
+                              ]
                             },
                             "quantity": {
-                              "type": ["number", "string"]
+                              "type": [
+                                "number",
+                                "string"
+                              ]
                             },
                             "price": {
-                              "type": ["number", "string"]
+                              "type": [
+                                "number",
+                                "string"
+                              ]
                             },
                             "executedAt": {
                               "type": "string",
@@ -7609,10 +9103,18 @@
                             ]
                           },
                           "annualIncome": {
-                            "type": ["number", "string", "null"]
+                            "type": [
+                              "number",
+                              "string",
+                              "null"
+                            ]
                           },
                           "netWorth": {
-                            "type": ["number", "string", "null"]
+                            "type": [
+                              "number",
+                              "string",
+                              "null"
+                            ]
                           },
                           "notes": {
                             "anyOf": [
@@ -7633,7 +9135,9 @@
                         "maxLength": 128
                       }
                     },
-                    "required": ["currentHoldings"]
+                    "required": [
+                      "currentHoldings"
+                    ]
                   },
                   "allowedOrigins": {
                     "minItems": 1,
@@ -7653,11 +9157,16 @@
                     "type": "array",
                     "items": {
                       "type": "string",
-                      "enum": ["card", "chat"]
+                      "enum": [
+                        "card",
+                        "chat"
+                      ]
                     }
                   }
                 },
-                "required": ["allowedOrigins"]
+                "required": [
+                  "allowedOrigins"
+                ]
               }
             }
           }
@@ -7683,7 +9192,12 @@
                       "type": "string"
                     }
                   },
-                  "required": ["url", "token", "expiresAt", "jti"],
+                  "required": [
+                    "url",
+                    "token",
+                    "expiresAt",
+                    "jti"
+                  ],
                   "additionalProperties": false
                 }
               }
@@ -7737,7 +9251,10 @@
         "operationId": "sdk-clarity-marketUpdate",
         "summary": "Get the shared market update card",
         "description": "Returns the organization's shared \"what is happening in the world\" Clarity card — the same market briefing shown across every portfolio, with inline citations and their source claims. The status field reports whether the latest successful content is fresh or stale. The deprecated isRefreshing field remains false for cached content. Portfolio-agnostic; no user context required. Returns null when no card has been generated yet.",
-        "tags": ["sdk", "clarity"],
+        "tags": [
+          "sdk",
+          "clarity"
+        ],
         "security": [
           {
             "apiKey": []
@@ -7796,7 +9313,10 @@
                                 "type": "string"
                               }
                             },
-                            "required": ["entityName", "label"],
+                            "required": [
+                              "entityName",
+                              "label"
+                            ],
                             "additionalProperties": false
                           }
                         },
@@ -7842,12 +9362,18 @@
                                 "type": "string"
                               }
                             },
-                            "required": ["localId", "text"],
+                            "required": [
+                              "localId",
+                              "text"
+                            ],
                             "additionalProperties": false
                           }
                         },
                         "fullText": {
-                          "type": ["string", "null"]
+                          "type": [
+                            "string",
+                            "null"
+                          ]
                         },
                         "headline": {
                           "type": "string"
@@ -7890,7 +9416,10 @@
                                 "type": "string"
                               }
                             },
-                            "required": ["kind", "localId"],
+                            "required": [
+                              "kind",
+                              "localId"
+                            ],
                             "additionalProperties": false
                           }
                         },
@@ -7899,7 +9428,10 @@
                         },
                         "status": {
                           "type": "string",
-                          "enum": ["fresh", "stale"]
+                          "enum": [
+                            "fresh",
+                            "stale"
+                          ]
                         },
                         "text": {
                           "type": "string"
@@ -7975,7 +9507,10 @@
         "operationId": "sdk-clarity-assetUpdate",
         "summary": "Get the generic stock/crypto Clarity read",
         "description": "Returns the holder-agnostic Clarity read for one asset — the same 'what is happening with this stock' content shared by everyone holding it. Identify the asset by ticker `symbol` and `name`. Returns null when no read has been generated yet.",
-        "tags": ["sdk", "clarity"],
+        "tags": [
+          "sdk",
+          "clarity"
+        ],
         "security": [
           {
             "apiKey": []
@@ -7991,7 +9526,11 @@
                 "properties": {
                   "category": {
                     "type": "string",
-                    "enum": ["EQUITY", "CRYPTO_TOKEN", "FUND"]
+                    "enum": [
+                      "EQUITY",
+                      "CRYPTO_TOKEN",
+                      "FUND"
+                    ]
                   },
                   "language": {
                     "type": "string"
@@ -8001,10 +9540,15 @@
                     "minLength": 1
                   },
                   "symbol": {
-                    "type": ["string", "null"]
+                    "type": [
+                      "string",
+                      "null"
+                    ]
                   }
                 },
-                "required": ["name"]
+                "required": [
+                  "name"
+                ]
               }
             }
           }
@@ -8023,7 +9567,10 @@
                           "type": "string"
                         },
                         "headline": {
-                          "type": ["string", "null"]
+                          "type": [
+                            "string",
+                            "null"
+                          ]
                         },
                         "isFresh": {
                           "type": "boolean"
@@ -8040,22 +9587,37 @@
                             "type": "object",
                             "properties": {
                               "description": {
-                                "type": ["string", "null"]
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
                               },
                               "imageUrl": {
-                                "type": ["string", "null"]
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
                               },
                               "pubDate": {
-                                "type": ["string", "null"]
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
                               },
                               "sourceDomain": {
-                                "type": ["string", "null"]
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
                               },
                               "title": {
                                 "type": "string"
                               },
                               "url": {
-                                "type": ["string", "null"]
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
                               }
                             },
                             "required": [
@@ -8073,10 +9635,16 @@
                           "type": "number"
                         },
                         "symbol": {
-                          "type": ["string", "null"]
+                          "type": [
+                            "string",
+                            "null"
+                          ]
                         },
                         "text": {
-                          "type": ["string", "null"]
+                          "type": [
+                            "string",
+                            "null"
+                          ]
                         }
                       },
                       "required": [
@@ -8148,7 +9716,10 @@
         "operationId": "sdk-clarity-portfolioCard",
         "summary": "Get the portfolio Clarity card",
         "description": "Returns the user's composed portfolio card for the requested window (1D, 1W, 1M, YTD or 1Y; default 1D) — the book's figures and events with the published market update and the latest authored portfolio read spliced in — together with that read (its headline, text, dated tests and sources). Both are null until the nightly composer and the weekly read have run. Requires the x-user-id header; no model is invoked per request.",
-        "tags": ["sdk", "clarity"],
+        "tags": [
+          "sdk",
+          "clarity"
+        ],
         "security": [
           {
             "apiKey": []
@@ -8167,7 +9738,13 @@
                   },
                   "window": {
                     "type": "string",
-                    "enum": ["1D", "1W", "1M", "YTD", "1Y"]
+                    "enum": [
+                      "1D",
+                      "1W",
+                      "1M",
+                      "YTD",
+                      "1Y"
+                    ]
                   }
                 }
               }
@@ -8213,7 +9790,10 @@
                                           "type": "string"
                                         }
                                       },
-                                      "required": ["entityName", "label"],
+                                      "required": [
+                                        "entityName",
+                                        "label"
+                                      ],
                                       "additionalProperties": false
                                     }
                                   },
@@ -8223,7 +9803,10 @@
                                       "type": "object",
                                       "properties": {
                                         "asOf": {
-                                          "type": ["string", "null"]
+                                          "type": [
+                                            "string",
+                                            "null"
+                                          ]
                                         },
                                         "currency": {
                                           "type": "string"
@@ -8239,7 +9822,10 @@
                                           "type": "string"
                                         },
                                         "value": {
-                                          "type": ["number", "string"]
+                                          "type": [
+                                            "number",
+                                            "string"
+                                          ]
                                         },
                                         "valueType": {
                                           "type": "string",
@@ -8267,7 +9853,10 @@
                                   },
                                   "kind": {
                                     "type": "string",
-                                    "enum": ["commentary", "holding-insight"]
+                                    "enum": [
+                                      "commentary",
+                                      "holding-insight"
+                                    ]
                                   },
                                   "label": {
                                     "type": "string"
@@ -8300,7 +9889,10 @@
                                 "type": "object",
                                 "properties": {
                                   "asOf": {
-                                    "type": ["string", "null"]
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
                                   },
                                   "currency": {
                                     "type": "string"
@@ -8316,7 +9908,10 @@
                                     "type": "string"
                                   },
                                   "value": {
-                                    "type": ["number", "string"]
+                                    "type": [
+                                      "number",
+                                      "string"
+                                    ]
                                   },
                                   "valueType": {
                                     "type": "string",
@@ -8344,7 +9939,11 @@
                             },
                             "kind": {
                               "type": "string",
-                              "enum": ["ASSET", "MARKET", "PORTFOLIO"]
+                              "enum": [
+                                "ASSET",
+                                "MARKET",
+                                "PORTFOLIO"
+                              ]
                             },
                             "language": {
                               "type": "string"
@@ -8361,7 +9960,10 @@
                                     "type": "string"
                                   },
                                   "asOf": {
-                                    "type": ["string", "null"]
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
                                   },
                                   "kind": {
                                     "type": "string",
@@ -8395,7 +9997,13 @@
                             },
                             "window": {
                               "type": "string",
-                              "enum": ["1D", "1W", "1M", "YTD", "1Y"]
+                              "enum": [
+                                "1D",
+                                "1W",
+                                "1M",
+                                "YTD",
+                                "1Y"
+                              ]
                             }
                           },
                           "required": [
@@ -8438,17 +10046,28 @@
                                 "type": "object",
                                 "properties": {
                                   "dueBy": {
-                                    "type": ["string", "null"]
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
                                   },
                                   "effect": {
                                     "type": "string",
-                                    "enum": ["improves", "weakens", "either"]
+                                    "enum": [
+                                      "improves",
+                                      "weakens",
+                                      "either"
+                                    ]
                                   },
                                   "test": {
                                     "type": "string"
                                   }
                                 },
-                                "required": ["dueBy", "effect", "test"],
+                                "required": [
+                                  "dueBy",
+                                  "effect",
+                                  "test"
+                                ],
                                 "additionalProperties": false
                               }
                             },
@@ -8473,7 +10092,9 @@
                                     "type": "string"
                                   }
                                 },
-                                "required": ["id"],
+                                "required": [
+                                  "id"
+                                ],
                                 "additionalProperties": false
                               }
                             },
@@ -8497,7 +10118,10 @@
                       ]
                     }
                   },
-                  "required": ["card", "read"],
+                  "required": [
+                    "card",
+                    "read"
+                  ],
                   "additionalProperties": false
                 }
               }
@@ -8551,7 +10175,10 @@
         "operationId": "sdk-clarity-holdingAnalysis",
         "summary": "Get the personalized holding analysis",
         "description": "Returns the user's personalized analysis for one holding — how the day's developments connect to that specific position — with its cited sources. Identify the holding by `assetId`. Requires the x-user-id header. Returns empty fields when no analysis has been generated yet.",
-        "tags": ["sdk", "clarity"],
+        "tags": [
+          "sdk",
+          "clarity"
+        ],
         "security": [
           {
             "apiKey": []
@@ -8573,7 +10200,9 @@
                     "type": "string"
                   }
                 },
-                "required": ["assetId"]
+                "required": [
+                  "assetId"
+                ]
               }
             }
           }
@@ -8587,19 +10216,34 @@
                   "type": "object",
                   "properties": {
                     "analysis": {
-                      "type": ["string", "null"]
+                      "type": [
+                        "string",
+                        "null"
+                      ]
                     },
                     "asOf": {
-                      "type": ["string", "null"]
+                      "type": [
+                        "string",
+                        "null"
+                      ]
                     },
                     "baseAnalysis": {
-                      "type": ["string", "null"]
+                      "type": [
+                        "string",
+                        "null"
+                      ]
                     },
                     "computedAt": {
-                      "type": ["string", "null"]
+                      "type": [
+                        "string",
+                        "null"
+                      ]
                     },
                     "reviewStatus": {
-                      "type": ["string", "null"]
+                      "type": [
+                        "string",
+                        "null"
+                      ]
                     },
                     "sources": {
                       "anyOf": [
@@ -8630,7 +10274,10 @@
                                     "type": "string"
                                   }
                                 },
-                                "required": ["entityName", "label"],
+                                "required": [
+                                  "entityName",
+                                  "label"
+                                ],
                                 "additionalProperties": false
                               }
                             },
@@ -8676,12 +10323,18 @@
                                     "type": "string"
                                   }
                                 },
-                                "required": ["localId", "text"],
+                                "required": [
+                                  "localId",
+                                  "text"
+                                ],
                                 "additionalProperties": false
                               }
                             }
                           },
-                          "required": ["citations", "claims"],
+                          "required": [
+                            "citations",
+                            "claims"
+                          ],
                           "additionalProperties": false
                         },
                         {
@@ -8751,7 +10404,10 @@
         "operationId": "sdk-clarity-resolveSourceDocuments",
         "summary": "Resolve cited Clarity source documents",
         "description": "Returns the full source articles behind Clarity citations, including the article body text. Pass the `sourceDocumentId` values carried on a card or chat answer's claims. Only documents within your organization scope (or global) are returned.",
-        "tags": ["sdk", "clarity"],
+        "tags": [
+          "sdk",
+          "clarity"
+        ],
         "security": [
           {
             "apiKey": []
@@ -8774,7 +10430,9 @@
                     }
                   }
                 },
-                "required": ["documentIds"]
+                "required": [
+                  "documentIds"
+                ]
               }
             }
           }
@@ -8796,19 +10454,34 @@
                         "type": "string"
                       },
                       "sourceUrl": {
-                        "type": ["string", "null"]
+                        "type": [
+                          "string",
+                          "null"
+                        ]
                       },
                       "sourceName": {
-                        "type": ["string", "null"]
+                        "type": [
+                          "string",
+                          "null"
+                        ]
                       },
                       "publishedAt": {
-                        "type": ["string", "null"]
+                        "type": [
+                          "string",
+                          "null"
+                        ]
                       },
                       "articleTitle": {
-                        "type": ["string", "null"]
+                        "type": [
+                          "string",
+                          "null"
+                        ]
                       },
                       "articleContent": {
-                        "type": ["string", "null"]
+                        "type": [
+                          "string",
+                          "null"
+                        ]
                       },
                       "authors": {
                         "type": "array",
@@ -8817,10 +10490,16 @@
                         }
                       },
                       "publisher": {
-                        "type": ["string", "null"]
+                        "type": [
+                          "string",
+                          "null"
+                        ]
                       },
                       "publisherType": {
-                        "type": ["string", "null"]
+                        "type": [
+                          "string",
+                          "null"
+                        ]
                       },
                       "createdAt": {
                         "type": "string"
@@ -8915,12 +10594,17 @@
                   "type": "string"
                 }
               },
-              "required": ["message"],
+              "required": [
+                "message"
+              ],
               "additionalProperties": false
             }
           }
         },
-        "required": ["message", "code"],
+        "required": [
+          "message",
+          "code"
+        ],
         "additionalProperties": false,
         "title": "Invalid input data error (400)",
         "description": "The error information",
@@ -8954,12 +10638,17 @@
                   "type": "string"
                 }
               },
-              "required": ["message"],
+              "required": [
+                "message"
+              ],
               "additionalProperties": false
             }
           }
         },
-        "required": ["message", "code"],
+        "required": [
+          "message",
+          "code"
+        ],
         "additionalProperties": false,
         "title": "Authorization not provided error (401)",
         "description": "The error information",
@@ -8993,12 +10682,17 @@
                   "type": "string"
                 }
               },
-              "required": ["message"],
+              "required": [
+                "message"
+              ],
               "additionalProperties": false
             }
           }
         },
-        "required": ["message", "code"],
+        "required": [
+          "message",
+          "code"
+        ],
         "additionalProperties": false,
         "title": "Insufficient access error (403)",
         "description": "The error information",
@@ -9032,12 +10726,17 @@
                   "type": "string"
                 }
               },
-              "required": ["message"],
+              "required": [
+                "message"
+              ],
               "additionalProperties": false
             }
           }
         },
-        "required": ["message", "code"],
+        "required": [
+          "message",
+          "code"
+        ],
         "additionalProperties": false,
         "title": "Not found error (404)",
         "description": "The error information",
@@ -9071,12 +10770,17 @@
                   "type": "string"
                 }
               },
-              "required": ["message"],
+              "required": [
+                "message"
+              ],
               "additionalProperties": false
             }
           }
         },
-        "required": ["message", "code"],
+        "required": [
+          "message",
+          "code"
+        ],
         "additionalProperties": false,
         "title": "Internal server error error (500)",
         "description": "The error information",

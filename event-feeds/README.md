@@ -1,28 +1,53 @@
-# Proposed event-feed integration
+# Connector lifecycle
 
-This directory contains design examples for the proposed pub/sub extension. **There is no broker client or executable event-feed walkthrough here yet.** The existing [TypeScript](../sdk/main.ts), [REST](../rest/main.ts) and [Java/Jakarta](../java/README.md) implementations continue to demonstrate the implemented REST/webhook lifecycle.
+This is the executable version of the [GitBook blueprint](https://motif.gitbook.io/motif-docs/integrate-with-motif/event-data-feeds). The connector container, the Motif feeds service and the matching public API must be running before `--apply`.
 
-The proposed architecture is a Motif-managed RabbitMQ service with one standard event contract for every partner. A partner can publish directly through a future SDK transport or connect an existing broker through a dedicated connector. A connector normalizes the partner's schema and binds its authenticated source to the correct organization and environment. A RabbitMQ Shovel can move compatible messages; it cannot perform that semantic mapping.
+## One sequence
 
-The [GitBook proposal](https://motif.gitbook.io/motif-docs/integrate-with-motif/event-data-feeds) is the partner-facing contract. Until that proposal is published, use [GitBook change request #49](https://github.com/motifappai/gitbook/pull/49). Example JSON bodies here match the proposal exactly:
+| Step | Partner action | Confirmation |
+| --- | --- | --- |
+| Subscribe | PUT `/v1/sdk/feeds/subscription`; consume `partner.output` | Subscription readback; real publications observed separately |
+| Discover | GET `/v1/sdk/assets`, following every cursor | One exact AAPL/NASDAQ/EQUITY listing; no ambiguous match |
+| Map and create | Publish `ai.motif.asset.master.v1` to `partner.input`, key `events` | `APPLIED` receipts with Motif asset IDs |
+| Price and FX | Publish `ai.motif.asset.price.v1` and `ai.motif.fx.rate.v1` to the same exchange | Applied receipts, correction revision, authorized FX read |
+| Read content | Read market update and asset insight | Dated content or explicit unavailable research |
+| Portfolio | PUT full snapshot to `/v1/sdk/portfolios/{externalId}` | Receipt followed by complete calculated revision |
+| Update | Replace full snapshot with revision 2; retry identical payload | Idempotent receipt and updated valuation |
+| Reconcile | Read portfolio insight, process publication events, GET a feed receipt | Stored outcome and a local durable event journal |
 
-- [Asset master](examples/asset-master.json): map a verified Motif asset ID to your stable reference and explicitly select partner pricing.
-- [Asset price](examples/asset-price.json): send a dated decimal price with correction revision, currency, price kind and adjustment convention.
-- [FX rate](examples/fx-rate.json): send quote-currency units per base-currency unit, with observation time and revision.
+The REST adapter is [rest.ts](rest.ts), the TypeScript adapter is [sdk/connector.ts](../sdk/connector.ts), and their common lifecycle is [lifecycle.ts](lifecycle.ts). [Java/Jakarta](../java/README.md) uses the generated Java SDK and the same partner-side broker protocol. These are language implementations of the same blueprint.
 
-These are illustrative payloads, not current market data or live request bodies. Replace the example asset ID with a catalog result. No existing REST endpoint accepts the CloudEvents wrapper. The proposed price-kind and adjustment fields and FX feed require implementation; do not strip them and assume equivalent current behavior.
+## Configuration
 
-The TypeScript and Java transport implementations must follow the same sequence when added:
+```dotenv
+MOTIF_API_BASE_URL=https://staging.backend.motifapp.ai/api
+MOTIF_API_KEY=YOUR_SANDBOX_ORGANIZATION_KEY
+MOTIF_ORG_ID=YOUR_SANDBOX_ORGANIZATION_ID
+PARTNER_BROKER_URL_FILE=/absolute/private/path/application.url
+PARTNER_BROKER_CA_FILE=/absolute/private/path/partner-ca.pem
+```
 
-1. Connect with organization/environment-scoped credentials and establish durable receipt/insight subscriptions.
-2. Publish asset master data directly, or bridge it from a dedicated source queue. Await the applied mapping receipt.
-3. Publish dated prices and FX observations with stable event IDs and observe processing receipts.
-4. PUT the complete portfolio snapshot using the existing REST contract; wait for valuation.
-5. GET market, asset and portfolio insights, resolving external references through authorized mappings.
-6. Consume publication notifications, read their content, and demonstrate reconnect, duplicate handling, failure/replay and cleanup.
+Omit `PARTNER_BROKER_CA_FILE` for a publicly trusted certificate. Java uses the JVM trust store (`javax.net.ssl.trustStore`) for a private CA. `MOTIF_LOCAL_BROKER=true` permits local test AMQP; production broker connections use TLS. Broker credentials are separate from the Motif API key. The connector and application have different broker users.
 
-A publish confirmation only means the broker accepted a message. It does not mean Motif applied the data or completed valuation/research. Subscribers acknowledge after their own durable processing. The connector acknowledges its source only after confirmed destination publication; business receipts provide end-to-end reconciliation.
+```bash
+npm ci --prefix connector
+npm run rest
+npm run rest -- --apply --listen-seconds=60
+```
 
-Use a separate source integration queue rather than consuming the partner application's work queue. Multiple workers on one durable subscription share work; independent applications need separate subscriptions. Organization isolation, bounded concurrency, routing errors, restart recovery and uncertain confirmation must be verified against a real broker before this becomes an executable reference.
+The SDK command is `npm run sdk -- --apply --listen-seconds=60` after installing a compatible SDK under `sdk/`. Both Node implementations need the connector's broker dependency installed. Java has its own broker client and does not require Node to run.
 
-History imports, cross-currency valuation, position PnL and an Illio portfolio backtest path are not currently demonstrated. Portfolio PUT does not accept a two-year backfill after a newer snapshot. Those contracts must be implemented and added to GitBook before extending the walkthrough.
+The source examples under `examples/` illustrate the contract; the live walkthrough supplies a catalog ID and current timestamps. Financial quantities and prices stay decimal strings. Use a stable listing reference, not a display name. Master events explicitly choose mapping or custom creation; prices reference that identity.
+
+The receiver writes and flushes each event to `.local/<run-id>.jsonl` before acknowledgment. It fetches published content before acknowledging publication events. A failure closes the connection, leaving unacknowledged work at the broker. Receipts are also available through Motif's receipt API. Production consumers should reconcile journaled work and deduplicate by event ID when resuming; the demo starts a new run ID each time and does not implement your application's business database.
+
+Run once in a clean sandbox: an existing Apple reference stops the demonstration to avoid overwriting it. A normal exit restores the previous broker subscription. The custom instrument, prices, FX, mapping and portfolio remain for inspection. An abrupt exit can leave the subscription changed; read and reconcile it before restarting.
+
+## Verify the transport
+
+```bash
+docker compose -f connector/tests/compose.yml up -d --wait
+npm --prefix connector run test:integration
+```
+
+This test uses two real RabbitMQ instances with scoped runtime credentials. It tests confirmed forwarding, returned receipts, malformed-event quarantine, loss and restoration of a binding, and independence from an unhealthy connection. These are local functional checks, not evidence of production availability or capacity for 100,000 portfolios.

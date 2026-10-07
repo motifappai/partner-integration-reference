@@ -3,18 +3,22 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "sdk": "node --env-file-if-exists=.env sdk/main.ts",
-    "rest": "node --env-file-if-exists=.env rest/main.ts",
+    "sdk": "node --env-file-if-exists=.env sdk/connector.ts",
+    "rest": "node --env-file-if-exists=.env event-feeds/rest.ts",
     "test": "node --test tests/*.test.ts",
     "typecheck": "tsc --noEmit",
     "format": "biome format --write .",
     "format:check": "biome format .",
-    "test:java": "MOTIF_TEST_JAVA=1 node --test tests/lifecycle.test.ts"
+    "test:java": "MOTIF_TEST_JAVA=1 node --test tests/connector-lifecycle.integration.ts",
+    "test:connector": "npm --prefix connector run test:integration",
+    "test:blueprint": "node --test tests/connector-lifecycle.integration.ts"
   },
   "devDependencies": {
     "@types/node": "24.13.6",
     "typescript": "6.0.3",
-    "@biomejs/biome": "2.5.14"
+    "@biomejs/biome": "2.5.14",
+    "amqplib": "2.2.0",
+    "pino": "10.4.0"
   },
   "engines": {
     "node": ">=24.18.0"
