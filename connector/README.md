@@ -52,6 +52,8 @@ Canonical CloudEvents pass through unchanged. For an existing source format, con
 }
 ```
 
+The target fields are the canonical contracts in [Data feeds](https://motif.gitbook.io/motif-docs/data-feeds/data-feeds). [Mapping partner data](https://motif.gitbook.io/motif-docs/data-feeds/normalization) lists which translations this release supports and which are agreed with Motif during onboarding, such as numeric, code-list, timestamp and currency-unit conversion.
+
 Place this under a connection's `mapping`. Missing fields, invalid envelopes and oversized events go to that source's quarantine. Mapping never evaluates code, guesses identifiers or converts floating-point values to financial decimals. A mapped connection carries one event type; use canonical events for a mixed feed. A separate mapped connection needs separate source/return queues and bindings.
 
 ## Delivery and recovery

@@ -37,7 +37,7 @@ npm run rest -- --apply --listen-seconds=60
 
 The SDK command is `npm run sdk -- --apply --listen-seconds=60` after installing a compatible SDK under `sdk/`. Both Node implementations need the connector's broker dependency installed. Java has its own broker client and does not require Node to run.
 
-The source examples under `examples/` illustrate the contract; the live walkthrough supplies a catalog ID and current timestamps. Financial quantities and prices stay decimal strings. Use a stable listing reference, not a display name. Master events explicitly choose mapping or custom creation; prices reference that identity.
+Required and optional fields for each event and the snapshot are listed in [Data feeds](https://motif.gitbook.io/motif-docs/data-feeds/data-feeds); [partner-events.schema.json](partner-events.schema.json) is the machine-readable event contract. The source examples under `examples/` illustrate the contract; the live walkthrough supplies a catalog ID and current timestamps. Financial quantities and prices stay decimal strings. Use a stable listing reference, not a display name. Master events explicitly choose mapping or custom creation; prices reference that identity.
 
 The receiver writes and flushes each event to `.local/<run-id>.jsonl` before acknowledgment. It fetches published content before acknowledging publication events. A failure closes the connection, leaving unacknowledged work at the broker. Receipts are also available through Motif's receipt API. Production consumers should reconcile journaled work and deduplicate by event ID when resuming; the demo starts a new run ID each time and does not implement your application's business database.
 

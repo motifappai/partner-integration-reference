@@ -4,6 +4,21 @@ This repository implements the [Motif partner connector blueprint](https://motif
 
 Your systems publish asset masters, prices and FX to **your RabbitMQ**. The **Motif connector container** forwards them to Motif and returns processing receipts and insight notifications. Portfolio snapshots and content reads use the Motif API. Your application's language and internal architecture remain outside this boundary.
 
+## Data contracts
+
+The four feeds have one canonical shape each. Required and optional fields are documented in GitBook:
+
+| Feed | Contract |
+| --- | --- |
+| Asset master data | [`ai.motif.asset.master.v1`](https://motif.gitbook.io/motif-docs/data-feeds/asset-master) |
+| Asset prices | [`ai.motif.asset.price.v1`](https://motif.gitbook.io/motif-docs/data-feeds/asset-prices) |
+| FX rates | [`ai.motif.fx.rate.v1`](https://motif.gitbook.io/motif-docs/data-feeds/fx-rates) |
+| Portfolio snapshots | [`PUT /v1/sdk/portfolios/{externalId}`](https://motif.gitbook.io/motif-docs/data-feeds/portfolio-snapshots) |
+
+The machine-readable event contract is [partner-events.schema.json](event-feeds/partner-events.schema.json). Your source does not need to match it: the connector maps your existing messages into these shapes. See [Mapping partner data](https://motif.gitbook.io/motif-docs/data-feeds/normalization) for what connector v0.1.0 maps today and what is agreed during onboarding. RabbitMQ is the source implemented here; another broker, pub/sub topic or REST endpoint uses the same contracts and is agreed with Motif per partner. Read the [overview](https://motif.gitbook.io/motif-docs/data-feeds/data-feeds) for the shared envelope and conventions.
+
+## Hosting
+
 The connector runs beside your broker, or Motif can run the same image for you. These are hosting placements of the same integration. Start in your organization's sandbox and move to separately provisioned production credentials after acceptance.
 
 ## Run the blueprint
