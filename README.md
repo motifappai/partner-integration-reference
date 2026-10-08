@@ -53,4 +53,6 @@ The fund price is illustrative sandbox data. Its correction to USD 13 makes five
 
 The API, broker topology and feeds worker must be deployed and provisioned in the sandbox before the live run. A locally passing test, processing receipt or broker confirmation does not prove that research was published. The walkthrough reports `NOT OBSERVED` when no real publication arrives. Assets, mappings and the example portfolio remain for inspection. The operator must reconcile any abrupt termination before reusing that sandbox.
 
+For a live end-to-end test against a sandbox organization, deploy the [sample partner](sample-partner/README.md): its own broker and a generator for asset master data, prices and FX in a partner-style format.
+
 See [connector operations and verification](connector/README.md) and [maintainer development checks](DEVELOPMENT.md).

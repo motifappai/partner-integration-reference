@@ -1,0 +1,20 @@
+name: Sample partner
+on:
+  pull_request:
+    paths: ['sample-partner/**', '.github/workflows/sample-partner.yml']
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24.18.0'
+          cache: npm
+          cache-dependency-path: sample-partner/package-lock.json
+      - run: npm ci --prefix sample-partner
+      - run: npm --prefix sample-partner run typecheck
+      - run: npm --prefix sample-partner test
+      - run: docker build -t motif-sample-partner:test sample-partner

@@ -1,0 +1,46 @@
+services:
+  sample-partner-rabbitmq:
+    image: rabbitmq:4.1-management
+    hostname: sample-partner-rabbitmq
+    restart: unless-stopped
+    environment:
+      RABBITMQ_DEFAULT_USER: ${SAMPLE_PARTNER_BROKER_USER:-sample-partner}
+      RABBITMQ_DEFAULT_PASS: ${SAMPLE_PARTNER_BROKER_PASSWORD:?Set SAMPLE_PARTNER_BROKER_PASSWORD}
+      RABBITMQ_DEFAULT_VHOST: partner
+    volumes:
+      - sample-partner-rabbitmq-data:/var/lib/rabbitmq
+    expose:
+      - 5672
+      - 15672
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+    networks:
+      - dokploy-network
+
+  sample-partner-generator:
+    build: .
+    restart: unless-stopped
+    depends_on:
+      sample-partner-rabbitmq:
+        condition: service_healthy
+    environment:
+      SAMPLE_BROKER_URL: amqp://${SAMPLE_PARTNER_BROKER_USER:-sample-partner}:${SAMPLE_PARTNER_BROKER_PASSWORD:?Set SAMPLE_PARTNER_BROKER_PASSWORD}@sample-partner-rabbitmq:5672/partner
+      INSTRUMENT_COUNT: ${INSTRUMENT_COUNT:-5}
+      PRICE_INTERVAL_MS: ${PRICE_INTERVAL_MS:-30000}
+      FX_INTERVAL_MS: ${FX_INTERVAL_MS:-60000}
+      INVALID_EVERY: ${INVALID_EVERY:-20}
+    expose:
+      - 8080
+    networks:
+      - dokploy-network
+
+volumes:
+  sample-partner-rabbitmq-data: {}
+
+networks:
+  dokploy-network:
+    external: true

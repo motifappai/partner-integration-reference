@@ -1,0 +1,18 @@
+{
+  "eventType": "ai.motif.asset.master.v1",
+  "enabled": true,
+  "source": "urn:sample-partner:securities",
+  "match": { "pointer": "/kind", "equals": "security" },
+  "idPointer": "/eventId",
+  "timePointer": "/observedAt",
+  "subjectPointer": "/securityId",
+  "fields": {
+    "externalId": "/securityId",
+    "asOf": "/observedAt",
+    "revision": "/version",
+    "name": "/name",
+    "symbol": "/code",
+    "currency": "/ccy"
+  },
+  "constants": { "action": "CREATE_CUSTOM", "priceProvider": "CUSTOM" }
+}
