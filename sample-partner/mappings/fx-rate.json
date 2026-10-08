@@ -1,0 +1,17 @@
+{
+  "eventType": "ai.motif.fx.rate.v1",
+  "enabled": true,
+  "source": "urn:sample-partner:fx",
+  "match": { "pointer": "/kind", "equals": "fx" },
+  "idPointer": "/eventId",
+  "timePointer": "/observedAt",
+  "subjectPointer": "/pair",
+  "fields": {
+    "baseCurrency": "/base",
+    "quoteCurrency": "/quote",
+    "asOf": "/observedAt",
+    "revision": "/version",
+    "rate": "/mid"
+  },
+  "constants": { "rateType": "MID" }
+}
