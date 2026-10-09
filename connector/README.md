@@ -54,7 +54,9 @@ Canonical CloudEvents pass through unchanged. For an existing source format, con
 
 The target fields are the canonical contracts in [Data feeds](https://motif.gitbook.io/motif-docs/data-feeds/data-feeds). [Mapping partner data](https://motif.gitbook.io/motif-docs/data-feeds/normalization) lists which translations this release supports and which are agreed with Motif during onboarding, such as numeric, code-list, timestamp and currency-unit conversion.
 
-Place this under a connection's `mapping`. Missing fields, invalid envelopes and oversized events go to that source's quarantine. Mapping never evaluates code, guesses identifiers or converts floating-point values to financial decimals. A mapped connection carries one event type; use canonical events for a mixed feed. A separate mapped connection needs separate source/return queues and bindings.
+Place this under a connection's `mapping`.
+
+Alternatively, set `forwardUnmapped: true` on a connection to forward any JSON object that is not a CloudEvent unchanged, so the mapping you manage in Motif (Settings → Partner feeds → Mapping, or the SDK feed endpoints) is applied on Motif's side. CloudEvents still pass through validated, and non-JSON or oversized messages are still quarantined. A connection uses either a local `mapping` or `forwardUnmapped`, not both. Missing fields, invalid envelopes and oversized events go to that source's quarantine. Mapping never evaluates code, guesses identifiers or converts floating-point values to financial decimals. A mapped connection carries one event type; use canonical events for a mixed feed. A separate mapped connection needs separate source/return queues and bindings.
 
 ## Delivery and recovery
 

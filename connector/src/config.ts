@@ -46,6 +46,7 @@ export const connectorConfigSchema = z
             quarantineQueue: name,
           }),
           mapping: mappingSchema.optional(),
+          forwardUnmapped: z.boolean().default(false),
           prefetch: z.number().int().min(1).max(64).default(8),
           maxMessageBytes: z.number().int().min(1024).max(1_048_576).default(262_144),
           confirmTimeoutMs: z.number().int().min(1000).max(60_000).default(15_000),
@@ -69,6 +70,11 @@ export const connectorConfigSchema = z
         context.addIssue({
           code: 'custom',
           message: 'Output and quarantine queues must differ',
+        })
+      if (connection.mapping && connection.forwardUnmapped)
+        context.addIssue({
+          code: 'custom',
+          message: 'Use either a connector mapping or forwardUnmapped, not both',
         })
     }
   })

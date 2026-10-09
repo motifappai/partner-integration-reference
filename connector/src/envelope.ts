@@ -1,3 +1,4 @@
+import { createHash } from 'node:crypto'
 import { z } from 'zod'
 import type { Mapping } from './config.ts'
 
@@ -58,4 +59,21 @@ export function normalizeEvent(content: Buffer, mapping?: Mapping): Envelope {
     datacontenttype: 'application/json',
     data: fields,
   })
+}
+
+export function unmappedIdentity(content: Buffer) {
+  let parsed: unknown
+  try {
+    parsed = JSON.parse(content.toString('utf8'))
+  } catch {
+    return null
+  }
+  if (
+    typeof parsed !== 'object' ||
+    parsed === null ||
+    Array.isArray(parsed) ||
+    Object.hasOwn(parsed, 'specversion')
+  )
+    return null
+  return createHash('sha256').update(content).digest('hex')
 }

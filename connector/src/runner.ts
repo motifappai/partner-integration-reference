@@ -3,7 +3,7 @@ import { setTimeout as delay } from 'node:timers/promises'
 import type { ChannelModel, ConsumeMessage } from 'amqplib'
 import type { Logger } from 'pino'
 import type { ConnectionConfig, ConnectorConfig } from './config.ts'
-import { normalizeEvent } from './envelope.ts'
+import { normalizeEvent, unmappedIdentity } from './envelope.ts'
 import { closeBroker, openBroker, publisher, type Publisher } from './transport.ts'
 
 export type ConnectionHealth = {
@@ -57,23 +57,34 @@ export async function runConnection(
         const isForward = direction === 'forwarded'
         let body: Buffer
         let identifier: string
+        let contentType = 'application/cloudevents+json'
         try {
           if (message.content.length > config.maxMessageBytes)
             throw new Error('Message size limit exceeded')
-          const envelope = normalizeEvent(
-            message.content,
-            isForward ? config.mapping : undefined
-          )
-          const isInput = [
-            'ai.motif.asset.master.v1',
-            'ai.motif.asset.price.v1',
-            'ai.motif.fx.rate.v1',
-          ].includes(envelope.type)
-          if (isForward !== isInput) throw new Error('Event direction is invalid')
-          body = Buffer.from(JSON.stringify(envelope))
-          if (body.length > config.maxMessageBytes)
-            throw new Error('Mapped message size limit exceeded')
-          identifier = envelope.id
+          const unmapped =
+            isForward && config.forwardUnmapped
+              ? unmappedIdentity(message.content)
+              : null
+          if (unmapped) {
+            body = message.content
+            identifier = unmapped
+            contentType = 'application/json'
+          } else {
+            const envelope = normalizeEvent(
+              message.content,
+              isForward ? config.mapping : undefined
+            )
+            const isInput = [
+              'ai.motif.asset.master.v1',
+              'ai.motif.asset.price.v1',
+              'ai.motif.fx.rate.v1',
+            ].includes(envelope.type)
+            if (isForward !== isInput) throw new Error('Event direction is invalid')
+            body = Buffer.from(JSON.stringify(envelope))
+            if (body.length > config.maxMessageBytes)
+              throw new Error('Mapped message size limit exceeded')
+            identifier = envelope.id
+          }
         } catch {
           const digest = createHash('sha256').update(message.content).digest('hex')
           await incoming.send(
@@ -100,7 +111,8 @@ export async function runConnection(
             ? config.destination.inputRoutingKey
             : config.source.outputRoutingKey,
           body,
-          identifier
+          identifier,
+          contentType
         )
         if (session.signal.aborted) return
         incoming.channel.ack(message)
