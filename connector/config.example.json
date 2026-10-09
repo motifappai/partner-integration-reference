@@ -3,7 +3,7 @@
   "healthPort": 8080,
   "connections": [
     {
-      "id": "chelmer-sandbox",
+      "id": "partner-sandbox",
       "organizationId": "SANDBOX_ORGANIZATION_ID",
       "environment": "sandbox",
       "source": {
