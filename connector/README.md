@@ -37,7 +37,7 @@ Canonical CloudEvents pass through unchanged. For an existing source format, con
 ```json
 {
   "type": "ai.motif.asset.price.v1",
-  "source": "urn:chelmer:market-data",
+  "source": "urn:example-partner:market-data",
   "id": "/eventId",
   "time": "/observedAt",
   "subject": "/securityId",
